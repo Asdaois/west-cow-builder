@@ -21,18 +21,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ false ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Area2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( -38, 24 ) ]
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "WalkRight"
@@ -50,25 +38,19 @@ tracks/0/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Area2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 38, 24 ) ]
-}
 
 [sub_resource type="CapsuleShape2D" id=4]
 radius = 13.0
 height = 8.0
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
+collision_mask = 6
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

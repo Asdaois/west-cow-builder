@@ -9,26 +9,26 @@ extends KinematicBody2D
 export var ACCELERATION = 100
 export var MAX_SPEED = 400
 export var FRICTION = 200
-
+export var GRAVITY = 200
 # public - private variables
-var velocity = Vector2.ZERO
+var velocity := Vector2.ZERO
 var stats = PlayerStats
 
 # on ready variables
-onready var animationPlayer = $AnimationPlayer
+onready var animationPlayer := $AnimationPlayer
 
 # built-in functions
-func _ready():
+func _ready() -> void:
 	stats.connect("no_nuggets", self, "queue_free")
-	
+	pass
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	_move_state(delta)
 	
 # public - private functions
 
-func _move_state(delta):
-	var input_vector = Vector2.ZERO
+func _move_state(delta) -> void:
+	var input_vector := Vector2.ZERO
 	input_vector.x = (
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	)
@@ -43,10 +43,14 @@ func _move_state(delta):
 		)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	
+	_add_gravity(delta)
 	_move()
 
-func _move():
+func _add_gravity(delta) -> void:
+	if !is_on_floor():
+		velocity.y += delta * GRAVITY
+
+func _move() -> void:
 	velocity = move_and_slide(velocity)
 
 # signals handlers

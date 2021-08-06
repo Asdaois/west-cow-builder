@@ -8,11 +8,16 @@
 
 [node name="FloorGenerator" parent="." instance=ExtResource( 1 )]
 position = Vector2( -9.52441, 557.178 )
-floor_length = 16
-
-[node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 559.204, 481.519 )
+floor_length = 45
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 239.391, 494.648 )
+collision_mask = 11
 run_speed = 80
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 721.492, 472.593 )
+collision_mask = 14
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true

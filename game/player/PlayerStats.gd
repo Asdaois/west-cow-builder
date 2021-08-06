@@ -1,4 +1,4 @@
-# class_name
+class_name Stats
 extends Node
 
 # custom signals
@@ -8,8 +8,8 @@ signal max_nuggets_changed(value)
 # enums - constant
 
 # exports variables
-export var max_nuggets = 10 setget set_max_nuggets
-export var nuggets = 0 setget set_nuggets
+export var max_nuggets := 10 setget set_max_nuggets
+export var nuggets := 0 setget set_nuggets
 
 # public - private variables
 

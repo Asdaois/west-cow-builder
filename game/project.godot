@@ -8,11 +8,25 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Stats",
+"language": "GDScript",
+"path": "res://player/PlayerStats.gd"
+} ]
+_global_script_class_icons={
+"Stats": ""
+}
+
 [application]
 
 config/name="West-cow-builder"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerStats="*res://player/PlayerStats.gd"
 
 [display]
 
@@ -47,6 +61,7 @@ texture={
 2d_physics/layer_1="Player"
 2d_physics/layer_2="Nugget"
 2d_physics/layer_3="Enemy"
+2d_physics/layer_4="Floor"
 
 [physics]
 
