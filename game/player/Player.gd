@@ -1,4 +1,4 @@
-# class_name
+class_name Player
 extends KinematicBody2D
 
 # custom signals
@@ -9,7 +9,7 @@ extends KinematicBody2D
 export var ACCELERATION = 100
 export var MAX_SPEED = 400
 export var FRICTION = 200
-export var GRAVITY = 200
+export var GRAVITY = 400
 # public - private variables
 var velocity := Vector2.ZERO
 var stats = PlayerStats
