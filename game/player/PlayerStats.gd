@@ -17,7 +17,7 @@ export var nuggets := 0 setget set_nuggets
 
 # built-in functions
 func _ready():
-	self.nuggets = max_nuggets
+	self.nuggets = 0
 
 # public - private functions
 func set_max_nuggets(value):

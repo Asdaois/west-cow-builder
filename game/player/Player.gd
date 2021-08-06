@@ -16,11 +16,11 @@ var stats = PlayerStats
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
+onready var label := $Label
 
 # built-in functions
 func _ready() -> void:
-	stats.connect("no_nuggets", self, "queue_free")
-	pass
+	stats.connect("nuggets_changed", self, "_get_nugget")
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
@@ -52,5 +52,8 @@ func _add_gravity(delta) -> void:
 
 func _move() -> void:
 	velocity = move_and_slide(velocity)
+
+func _get_nugget(value):
+	label.text = String(value)
 
 # signals handlers

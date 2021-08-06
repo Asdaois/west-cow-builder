@@ -8,6 +8,7 @@ extends RigidBody2D
 # exports variables
 
 # public - private variables
+var stats = PlayerStats
 
 # on ready variables
 
@@ -18,4 +19,6 @@ extends RigidBody2D
 # signals handlers
 
 func _on_Area2D_area_entered(area):
+	stats.nuggets += 1
+	print(stats.nuggets)
 	queue_free()

@@ -19,4 +19,13 @@ position = Vector2( 34.75, 130.75 )
 floor_length = 16
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 3 )]
-position = Vector2( 300, 33 )
+position = Vector2( 305, 25 )
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 338, 40 )
+
+[node name="StaticBody2D3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 403, 50 )
+
+[node name="StaticBody2D4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 379, 11 )
