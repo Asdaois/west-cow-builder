@@ -24,14 +24,18 @@ func _physics_process(delta):
 
 func _move_state(delta):
 	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	input_vector.x = (
+		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	)
 	
 	if input_vector != Vector2.ZERO:
 		if input_vector.x < 0:
 			animationPlayer.play("WalkLeft")
 		else:
 			animationPlayer.play("WalkRight")
-		velocity = velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+		velocity = (
+			velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
+		)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	
