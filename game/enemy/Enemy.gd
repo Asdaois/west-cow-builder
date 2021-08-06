@@ -6,8 +6,10 @@ extends KinematicBody2D
 # enums - constant
 
 # exports variables
-export var run_speed := 25
-export var gravity := 300
+export(float, 0, 200) var run_speed := 25
+export(float, 150, 450) var gravity := 300
+export(float, 1, 2) var recoy_in_x : float = 1.5
+export(float, 0, 120) var recoy_in_y : float  = 60
 # public - private variables
 var velocity := Vector2.ZERO
 var player : Player
@@ -16,11 +18,6 @@ var collision : KinematicCollision2D
 # on ready variables
 
 # built-in functions
-
-func _ready() -> void:
-	print("The initial value of velocity is {0}".format(velocity))
-	pass
-
 
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
@@ -70,9 +67,9 @@ func _is_collision_player() -> bool:
 
 # signals handlers
 func _attack_player():
-	velocity.y = -60 - rand_range(0, 60)
+	velocity.y = -60 - rand_range(0, recoy_in_y)
 	velocity.x += velocity.x / 4
-	velocity = velocity.bounce(collision.normal) * rand_range(1, 1.5)
+	velocity = velocity.bounce(collision.normal) * rand_range(1, recoy_in_x)
 	can_follow_player = false
 	# TODO: Do damage to player? 
 	# variable player
