@@ -14,6 +14,10 @@ config/name="West-cow-builder"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+PlayerStats="*res://player/PlayerStats.gd"
+
 [importer_defaults]
 
 texture={

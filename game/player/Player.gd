@@ -12,11 +12,16 @@ export var FRICTION = 200
 
 # public - private variables
 var velocity = Vector2.ZERO
+var stats = PlayerStats
 
 # on ready variables
 onready var animationPlayer = $AnimationPlayer
 
 # built-in functions
+func _ready():
+	stats.connect("no_nuggets", self, "queue_free")
+	
+
 func _physics_process(delta):
 	_move_state(delta)
 	
