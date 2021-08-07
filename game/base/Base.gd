@@ -7,7 +7,7 @@ extends StaticBody2D
 
 # exports variables
 export var NUGGETS_EARNED = 3
-
+export(Resource) var cows
 # public - private variables
 var _delivery = false
 var stats = PlayerStats
@@ -23,8 +23,8 @@ func _init() -> void:
 func _input(event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):
-			stats.nuggets += NUGGETS_EARNED * stats.cows
-			stats.cows = 0
+			stats.nuggets += NUGGETS_EARNED * cows.quantity
+			cows.quantity = 0
 
 func _ready() -> void:
 	pass
@@ -37,7 +37,7 @@ func _ready() -> void:
 
 func _on_DetectionArea_area_entered(area):
 	if area.name == "PlayerArea":
-		if(stats.cows > 0):
+		if(cows.quantity > 0):
 			label.text = "Entregar Vacas"
 			_delivery = true
 		else:

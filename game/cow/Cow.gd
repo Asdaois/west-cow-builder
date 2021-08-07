@@ -7,10 +7,9 @@ extends KinematicBody2D
 
 # exports variables
 export var GRAVITY = 400
-
+export(Resource) var cow
 # public - private variables
 var _pickable = false
-var stats = PlayerStats
 var velocity := Vector2.ZERO
 
 # on ready variables
@@ -24,8 +23,7 @@ func _init() -> void:
 func _input(_event) -> void:
 	if(_pickable):
 		if Input.is_key_pressed(16777234):
-			stats.cows += 1
-			print(stats.cows)
+			(cow as ItemResource).quantity += 1
 			queue_free()
 
 func _physics_process(delta):

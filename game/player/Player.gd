@@ -12,6 +12,7 @@ export var FRICTION = 200
 export var GRAVITY = 400
 export var WATER_CONSUMPTION_TIME = 3
 export var WATER_CONSUMPTION_QUANTITY = 4
+export(Resource) var cows
 # public - private variables
 var velocity := Vector2.ZERO
 var stats = PlayerStats
@@ -27,7 +28,7 @@ onready var water_consumption := $WaterConsumption
 # built-in functions
 func _ready() -> void:
 	stats.connect("nuggets_changed", self, "_get_nugget")
-	stats.connect("cows_changed", self, "_get_cow")
+	(cows as ItemResource).connect("quantity_changed", self, "_get_cow")
 	stats.connect("water_changed", self, "_get_water")
 	stats.connect('no_nuggets', self, "_game_over")
 
