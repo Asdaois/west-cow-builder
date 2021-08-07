@@ -30,12 +30,12 @@ func _input(_event) -> void:
 
 func _physics_process(delta):
 	_add_gravity(delta)
+	velocity = move_and_slide(velocity)
 
 # public - private functions
 func _add_gravity(delta) -> void:
 	if !is_on_floor():
 		velocity.y += delta * GRAVITY
-	velocity = move_and_slide(velocity)
 
 # signals handlers
 

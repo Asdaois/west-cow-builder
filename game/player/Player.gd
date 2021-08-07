@@ -29,6 +29,7 @@ func _ready() -> void:
 	stats.connect("nuggets_changed", self, "_get_nugget")
 	stats.connect("cows_changed", self, "_get_cow")
 	stats.connect("water_changed", self, "_get_water")
+	stats.connect('no_nuggets', self, "_game_over")
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
@@ -81,6 +82,9 @@ func _get_cow(value):
 
 func _get_water(value):
 	label3.text = "Water: " + String(value)
+
+func _game_over():
+	queue_free()
 
 # signals handlers
 func _on_WaterConsumption_timeout():

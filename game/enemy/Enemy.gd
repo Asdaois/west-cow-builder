@@ -54,6 +54,8 @@ func _get_player_direction() -> void:
 
 
 func _get_better_speed() -> float:
+	if player == null:
+		return float(0)
 	# This formula is more quickli A^2 = B^2 + C^2 
 	var distance_to_player = position.distance_squared_to(player.position)
 	var distance_to_accelerate = pow(rage_distance, 2)

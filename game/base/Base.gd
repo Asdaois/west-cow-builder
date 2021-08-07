@@ -18,7 +18,7 @@ onready var label := $Label
 # built-in functions
 
 func _init() -> void:
-  pass
+	pass
 
 func _input(event):
 	if(_delivery):
@@ -27,7 +27,7 @@ func _input(event):
 			stats.cows = 0
 
 func _ready() -> void:
-  pass
+	pass
 
 # public - private functions
 
