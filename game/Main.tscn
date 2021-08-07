@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test/test-floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://cow/Cow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://base/Base.tscn" type="PackedScene" id=4]
+[ext_resource path="res://nugget/Nugget.tscn" type="PackedScene" id=5]
+[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node2D"]
 
@@ -36,3 +38,12 @@ position = Vector2( 449, 71 )
 
 [node name="Cow5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 385, 71 )
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 5 )]
+position = Vector2( 541, 31 )
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 611, 39 )
+
+[node name="Enemy" parent="." instance=ExtResource( 6 )]
+position = Vector2( 507, 21 )

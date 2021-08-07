@@ -18,16 +18,10 @@ _global_script_classes=[ {
 "class": "Player",
 "language": "GDScript",
 "path": "res://player/Player.gd"
-}, {
-"base": "Node",
-"class": "Stats",
-"language": "GDScript",
-"path": "res://player/PlayerStats.gd"
 } ]
 _global_script_class_icons={
 "ItemResource": "",
-"Player": "",
-"Stats": ""
+"Player": ""
 }
 
 [application]
@@ -35,10 +29,6 @@ _global_script_class_icons={
 config/name="West-cow-builder"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
-
-[autoload]
-
-PlayerStats="*res://player/PlayerStats.gd"
 
 [display]
 
