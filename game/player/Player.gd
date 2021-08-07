@@ -10,17 +10,25 @@ export var ACCELERATION = 100
 export var MAX_SPEED = 400
 export var FRICTION = 200
 export var GRAVITY = 400
+export var WATER_CONSUMPTION_TIME = 3
+export var WATER_CONSUMPTION_QUANTITY = 4
 # public - private variables
 var velocity := Vector2.ZERO
 var stats = PlayerStats
+var timer_flag = true
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
 onready var label := $Label
+onready var label2 := $Label2
+onready var label3 := $Label3
+onready var water_consumption := $WaterConsumption
 
 # built-in functions
 func _ready() -> void:
 	stats.connect("nuggets_changed", self, "_get_nugget")
+	stats.connect("cows_changed", self, "_get_cow")
+	stats.connect("water_changed", self, "_get_water")
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
@@ -52,8 +60,26 @@ func _add_gravity(delta) -> void:
 
 func _move() -> void:
 	velocity = move_and_slide(velocity)
+	if (timer_flag):
+		_water_timer()
+
+func _water_timer() -> void:
+	if(velocity.x != 0):
+		water_consumption.start(WATER_CONSUMPTION_TIME)
+		timer_flag = false
+	else:
+		water_consumption.stop()
 
 func _get_nugget(value):
-	label.text = String(value)
+	label.text = "Nuggets: " + String(value)
+
+func _get_cow(value):
+	label2.text = "Cows: " + String(value)
+
+func _get_water(value):
+	label3.text = "Water: " + String(value)
 
 # signals handlers
+func _on_WaterConsumption_timeout():
+	stats.water -= WATER_CONSUMPTION_QUANTITY
+	timer_flag = true
