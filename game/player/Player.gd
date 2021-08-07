@@ -26,6 +26,9 @@ func _physics_process(delta) -> void:
 	_move_state(delta)
 	
 # public - private functions
+func receive_damage(damage: int) -> void:
+	stats.nuggets -= damage
+
 
 func _move_state(delta) -> void:
 	var input_vector := Vector2.ZERO
