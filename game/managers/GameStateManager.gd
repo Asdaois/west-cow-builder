@@ -42,6 +42,7 @@ func resume_game():
 
 func new_game():
 	get_tree().reload_current_scene()
+	get_tree().paused = false
 	emit_signal('start_game')
 
 func exit_game():

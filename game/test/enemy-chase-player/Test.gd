@@ -6,9 +6,9 @@ extends Node2D
 # enums - constant
 
 # exports variables
-
+export (Resource) var Nuggets
 # public - private variables
-
+onready var nuggets : ItemResource = Nuggets
 # on ready variables
 onready var player := $Player
 # built-in functions
@@ -18,7 +18,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	PlayerStats.nuggets = 5
+	nuggets.quantity += 5
 	pass
 
 # public - private functions
