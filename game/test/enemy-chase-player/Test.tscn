@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://test/enemy-chase-player/Test.gd" type="Script" id=4]
+[ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=5]
+
+[node name="Test" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 5 )]
+
+[node name="FloorGenerator" parent="." instance=ExtResource( 3 )]
+position = Vector2( -9.52441, 557.178 )
+floor_length = 45
+
+[node name="Enemy" parent="." instance=ExtResource( 1 )]
+position = Vector2( 239.391, 494.648 )
+run_speed = 132.222
+recoy_in_x = 1.208
+recoy_in_y = 61.667
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 721.492, 472.593 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
