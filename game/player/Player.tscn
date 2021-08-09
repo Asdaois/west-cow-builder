@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/Sprites/Player.png" type="Texture" id=2]
 [ext_resource path="res://data/player_stats/Cow.tres" type="Resource" id=3]
+[ext_resource path="res://data/player_stats/Water.tres" type="Resource" id=4]
+[ext_resource path="res://data/player_stats/Nugget.tres" type="Resource" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 45, 10 )
@@ -74,6 +76,8 @@ height = 8.0
 collision_mask = 14
 script = ExtResource( 1 )
 cows = ExtResource( 3 )
+nuggets = ExtResource( 5 )
+water = ExtResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

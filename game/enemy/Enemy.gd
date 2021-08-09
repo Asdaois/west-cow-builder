@@ -23,12 +23,16 @@ onready var attackCooldownTimer := $AtackCooldownTimer
 # built-in functions
 
 func _ready() -> void:
-	GameStateManager.connect('player_died', self, "_on_player_died")
+	GameStateManager.connect('game_over', self, "_on_player_died")
+
+
+func _process(delta: float) -> void:
+	_get_player_direction()
+	
 
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
 	if _can_follow_player:
-		_get_player_direction()
 		_move_and_collide(delta)
 		if _is_collision_player() and _can_attack_player:
 			_attack_player()
@@ -52,8 +56,8 @@ func _add_gravity(delta : float) -> void:
 
 
 func _get_player_direction() -> void:
-	velocity.x = 0
 	if player != null and _can_follow_player:
+		velocity.x = 0
 		velocity = (position.direction_to(player.position) * _get_better_speed())
 		velocity = velocity * Vector2.RIGHT
 

@@ -18,7 +18,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	nuggets.quantity += 5
+	nuggets.quantity += 1
 	pass
 
 # public - private functions

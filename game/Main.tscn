@@ -4,21 +4,21 @@
 [ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://cow/Cow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://base/Base.tscn" type="PackedScene" id=4]
-[ext_resource path="res://nugget/Nugget.tscn" type="PackedScene" id=5]
+[ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 216, -1 )
+current = true
+zoom = Vector2( 0.3, 0.3 )
 
 [node name="Base" parent="." instance=ExtResource( 4 )]
 position = Vector2( 997, 46 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 217, 6 )
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2( -1, -7 )
-current = true
-zoom = Vector2( 0.3, 0.3 )
 
 [node name="FloorGenerator" parent="." instance=ExtResource( 2 )]
 position = Vector2( 34.75, 130.75 )
@@ -39,11 +39,7 @@ position = Vector2( 449, 71 )
 [node name="Cow5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 385, 71 )
 
-[node name="StaticBody2D" parent="." instance=ExtResource( 5 )]
-position = Vector2( 541, 31 )
-
-[node name="StaticBody2D2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 611, 39 )
-
 [node name="Enemy" parent="." instance=ExtResource( 6 )]
 position = Vector2( 507, 21 )
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 5 )]

@@ -2,21 +2,22 @@
 extends Node
 
 # custom signals
-signal game_is_paused
-signal player_died
 signal start_game
 signal resume_game
+signal player_died
+signal game_is_paused
+signal game_over
 # enums - constant
 
 enum GameState {
 	PAUSE,
 	PLAYING,
-	PLAYER_DIE
+	GAME_OVER
 }
 # exports variables
 
 # public - private variables
-
+var current_state = GameState.PLAYING
 # on ready variables
 
 # built-in functions
@@ -38,12 +39,14 @@ func _process(delta: float) -> void:
 func resume_game():
 	emit_signal('resume_game')
 	get_tree().paused = false
+	current_state = GameState.PLAYING
 
 
 func new_game():
 	get_tree().reload_current_scene()
 	get_tree().paused = false
 	emit_signal('start_game')
+	current_state = GameState.PLAYING
 
 
 func exit_game():
@@ -51,11 +54,13 @@ func exit_game():
 
 
 func game_over():
-	emit_signal('player_died')
+	emit_signal('game_over')
+	current_state = GameState.GAME_OVER
 
 
 func _pause_game():
 	emit_signal('game_is_paused')
 	get_tree().paused = true
+	current_state = GameState.PAUSE
 
 # signals handlers
