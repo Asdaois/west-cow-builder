@@ -13,9 +13,10 @@ export var GRAVITY = 400
 export var WATER_CONSUMPTION_TIME = 3
 export var WATER_CONSUMPTION_QUANTITY = 4
 export(Resource) var cows
+export(Resource) var nuggets
+export(Resource) var water
 # public - private variables
 var velocity := Vector2.ZERO
-var stats = PlayerStats
 var timer_flag = true
 
 # on ready variables
@@ -27,17 +28,17 @@ onready var water_consumption := $WaterConsumption
 
 # built-in functions
 func _ready() -> void:
-	stats.connect("nuggets_changed", self, "_get_nugget")
+	(nuggets as ItemResource).connect("quantity_changed", self, "_get_nugget")
+	(nuggets as ItemResource).connect('quantity_emptied', self, "_game_over")
 	(cows as ItemResource).connect("quantity_changed", self, "_get_cow")
-	stats.connect("water_changed", self, "_get_water")
-	stats.connect('no_nuggets', self, "_game_over")
+	(water as ItemResource).connect("quantity_changed", self, "_get_water")
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
 	
 # public - private functions
 func receive_damage(damage: int) -> void:
-	stats.nuggets -= damage
+	nuggets.quantity -= damage
 
 
 func _move_state(delta) -> void:
@@ -89,5 +90,5 @@ func _game_over():
 
 # signals handlers
 func _on_WaterConsumption_timeout():
-	stats.water -= WATER_CONSUMPTION_QUANTITY
+	water.quantity -= WATER_CONSUMPTION_QUANTITY
 	timer_flag = true

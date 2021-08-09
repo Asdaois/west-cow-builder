@@ -6,9 +6,9 @@ extends RigidBody2D
 # enums - constant
 
 # exports variables
+export(Resource) var nugget
 
 # public - private variables
-var stats = PlayerStats
 
 # on ready variables
 
@@ -19,6 +19,5 @@ var stats = PlayerStats
 # signals handlers
 
 func _on_Area2D_area_entered(area):
-	stats.nuggets += 1
-	print(stats.nuggets)
+	nugget.quantity += 1
 	queue_free()

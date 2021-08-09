@@ -8,9 +8,9 @@ extends StaticBody2D
 # exports variables
 export var NUGGETS_EARNED = 3
 export(Resource) var cows
+export(Resource) var nuggets
 # public - private variables
 var _delivery = false
-var stats = PlayerStats
 
 # on ready variables
 onready var label := $Label
@@ -23,7 +23,7 @@ func _init() -> void:
 func _input(event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):
-			stats.nuggets += NUGGETS_EARNED * cows.quantity
+			nuggets.quantity += NUGGETS_EARNED * cows.quantity
 			cows.quantity = 0
 
 func _ready() -> void:
