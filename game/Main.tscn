@@ -9,16 +9,16 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="Camera" type="Camera2D" parent="."]
-position = Vector2( 216, -1 )
-current = true
-zoom = Vector2( 0.3, 0.3 )
-
 [node name="Base" parent="." instance=ExtResource( 4 )]
 position = Vector2( 997, 46 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 217, 6 )
+
+[node name="Camera" type="Camera2D" parent="Player"]
+position = Vector2( -1, -7 )
+current = true
+zoom = Vector2( 0.3, 0.3 )
 
 [node name="FloorGenerator" parent="." instance=ExtResource( 2 )]
 position = Vector2( 34.75, 130.75 )

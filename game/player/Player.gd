@@ -32,6 +32,8 @@ func _ready() -> void:
 	(nuggets as ItemResource).connect('quantity_emptied', self, "_game_over")
 	(cows as ItemResource).connect("quantity_changed", self, "_get_cow")
 	(water as ItemResource).connect("quantity_changed", self, "_get_water")
+	# TODO: Delete this for test
+	(nuggets as ItemResource).quantity += 500
 
 func _physics_process(delta) -> void:
 	_move_state(delta)

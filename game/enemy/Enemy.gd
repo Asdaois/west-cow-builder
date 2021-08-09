@@ -11,13 +11,15 @@ export(float, 150, 450) var gravity := 300
 export(float, 1, 2) var recoy_in_x : float = 1.5
 export(float, 0, 120) var recoy_in_y : float  = 60
 export(float, 0, 200) var rage_distance : float = 150
-export(int) var time_between_attacks : int = 1
+export(float) var time_between_attacks : int = 1.5
 # public - private variables
 var velocity := Vector2.ZERO
 var player : Player
 var _can_follow_player := true
 var _can_attack_player := true
-var collision : KinematicCollision2D
+var _collision : KinematicCollision2D
+var _is_player_overlapping := false
+var _direction_options := [Vector2.RIGHT, Vector2.LEFT]
 # on ready variables
 onready var attackCooldownTimer := $AtackCooldownTimer
 # built-in functions
@@ -79,29 +81,46 @@ func _move():
 
 
 func _move_and_collide(delta : float):
-	collision = move_and_collide(velocity * delta)
+	_collision = move_and_collide(velocity * delta)
 
 
 func _is_collision_player() -> bool:
-	if collision:
-		if (collision.collider as Node2D).is_in_group("player"):
+	if _collision:
+		if (_collision.collider as Node2D).is_in_group("player"):
 			return true
 	return false
 
 
 func _attack_player() -> void:
-	_do_attack_move()
+	_disable_collision_with_player()
 	player.receive_damage(1)
 	_can_follow_player = false
 	_can_attack_player = false
 	attackCooldownTimer.start()
+	_do_attack_move()
 
 
 func _do_attack_move() -> void:
 	velocity.y = -60 - rand_range(0, recoy_in_y)
 	velocity.x += velocity.x / 4
-	velocity = velocity.bounce(collision.normal) * rand_range(1, recoy_in_x)
-	
+	if not _is_player_overlapping:
+		velocity = _calculate_bounce(_collision.normal)
+	else:
+		_direction_options.shuffle()
+		velocity = _calculate_bounce(_direction_options[0], 2)
+		velocity.y = -10
+
+func _calculate_bounce(direction: Vector2, multiplier = 1) -> Vector2:
+	 return velocity.bounce(direction) * (rand_range(1, recoy_in_x) * multiplier)
+
+func _disable_collision_with_player() -> void:
+	set_collision_mask_bit(0, false)
+	pass
+
+func _enable_collision_with_player() -> void:
+	if _is_player_overlapping:
+		return
+	set_collision_mask_bit(0, true)
 # signals handlers
 
 
@@ -113,9 +132,23 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 
 func _on_AtackCooldownTimer_timeout() -> void:
 	_can_attack_player = true
+	_enable_collision_with_player()
+	if _is_player_overlapping:
+		_attack_player()
 
 
 func _on_player_died() -> void:
 	_can_attack_player = false
 	_can_follow_player = false
 	player = null
+
+
+func _on_PlayerInAttackRange_body_entered(body: Node) -> void:
+	if body.is_in_group("player"):
+		_is_player_overlapping = true
+
+
+func _on_PlayerInAttackRange_body_exited(body: Node) -> void:
+	if body.is_in_group("player"):
+		_is_player_overlapping = false
+		_enable_collision_with_player()
