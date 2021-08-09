@@ -86,6 +86,7 @@ func _get_water(value):
 	label3.text = "Water: " + String(value)
 
 func _game_over():
+	GameStateManager.game_over()
 	queue_free()
 
 # signals handlers

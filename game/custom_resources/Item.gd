@@ -14,7 +14,7 @@ export(int) var max_quantity := 0 setget set_max_quantity
 # public - private functions
 func set_max_quantity(value):
 	max_quantity = value
-	self.quantity = min(quantity, max_quantity)
+	self.quantity = min(quantity, max_quantity) as int
 	emit_signal('max_quantity_changed', max_quantity)
 	
 func set_quantity(value):

@@ -17,6 +17,9 @@ __meta__ = {
 }
 run_speed = 43.819
 
+[node name="AtackCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="Indian" type="Sprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 1 )
@@ -31,4 +34,5 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource( 2 )
 
+[connection signal="timeout" from="AtackCooldownTimer" to="." method="_on_AtackCooldownTimer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]

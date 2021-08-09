@@ -45,13 +45,17 @@ func new_game():
 	get_tree().paused = false
 	emit_signal('start_game')
 
+
 func exit_game():
 	get_tree().quit()
+
+
+func game_over():
+	emit_signal('player_died')
 
 
 func _pause_game():
 	emit_signal('game_is_paused')
 	get_tree().paused = true
-
 
 # signals handlers

@@ -11,21 +11,26 @@ export(float, 150, 450) var gravity := 300
 export(float, 1, 2) var recoy_in_x : float = 1.5
 export(float, 0, 120) var recoy_in_y : float  = 60
 export(float, 0, 200) var rage_distance : float = 150
+export(int) var time_between_attacks : int = 1
 # public - private variables
 var velocity := Vector2.ZERO
 var player : Player
-var can_follow_player := true
+var _can_follow_player := true
+var _can_attack_player := true
 var collision : KinematicCollision2D
 # on ready variables
-
+onready var attackCooldownTimer := $AtackCooldownTimer
 # built-in functions
+
+func _ready() -> void:
+	GameStateManager.connect('player_died', self, "_on_player_died")
 
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
-	if can_follow_player:
+	if _can_follow_player:
 		_get_player_direction()
 		_move_and_collide(delta)
-		if _is_collision_player():
+		if _is_collision_player() and _can_attack_player:
 			_attack_player()
 	else:
 		_move()
@@ -38,7 +43,7 @@ func _physics_process(delta: float) -> void:
 func _resume_follow_player() -> void:
 	velocity.x = 0 # Stop the movement in x
 	yield(get_tree().create_timer(0.5), 'timeout')
-	can_follow_player = true
+	_can_follow_player = true
 
 
 func _add_gravity(delta : float) -> void:
@@ -48,7 +53,7 @@ func _add_gravity(delta : float) -> void:
 
 func _get_player_direction() -> void:
 	velocity.x = 0
-	if player != null:
+	if player != null and _can_follow_player:
 		velocity = (position.direction_to(player.position) * _get_better_speed())
 		velocity = velocity * Vector2.RIGHT
 
@@ -83,13 +88,16 @@ func _is_collision_player() -> bool:
 func _attack_player() -> void:
 	_do_attack_move()
 	player.receive_damage(1)
+	_can_follow_player = false
+	_can_attack_player = false
+	attackCooldownTimer.start()
 
 
 func _do_attack_move() -> void:
 	velocity.y = -60 - rand_range(0, recoy_in_y)
 	velocity.x += velocity.x / 4
 	velocity = velocity.bounce(collision.normal) * rand_range(1, recoy_in_x)
-	can_follow_player = false
+	
 # signals handlers
 
 
@@ -97,3 +105,13 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		player = body
 	pass
+
+
+func _on_AtackCooldownTimer_timeout() -> void:
+	_can_attack_player = true
+
+
+func _on_player_died() -> void:
+	_can_attack_player = false
+	_can_follow_player = false
+	player = null
