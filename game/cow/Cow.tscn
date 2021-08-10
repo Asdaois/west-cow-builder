@@ -43,5 +43,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PickupTimer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_area_entered"]
 [connection signal="area_exited" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_area_exited"]
+[connection signal="timeout" from="PickupTimer" to="." method="_on_PickupTimer_timeout"]
