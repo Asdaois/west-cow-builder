@@ -25,13 +25,13 @@ position = Vector2( 34.75, 130.75 )
 floor_length = 100
 
 [node name="Cow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 316, 75 )
+position = Vector2( 129, 73 )
 
 [node name="Cow2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 45, 75 )
 
 [node name="Cow3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 114, 75 )
+position = Vector2( 294, 73 )
 
 [node name="Cow4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 449, 71 )

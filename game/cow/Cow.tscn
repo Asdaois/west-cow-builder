@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://cow/sprites/vaca.png" type="Texture" id=1]
 [ext_resource path="res://cow/Cow.gd" type="Script" id=2]
 [ext_resource path="res://data/player_stats/Cow.tres" type="Resource" id=3]
+[ext_resource path="res://cow/WanderController.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 10.0
@@ -44,6 +45,8 @@ __meta__ = {
 }
 
 [node name="PickupTimer" type="Timer" parent="."]
+
+[node name="WanderController" parent="." instance=ExtResource( 4 )]
 
 [connection signal="area_entered" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_area_entered"]
 [connection signal="area_exited" from="PlayerDetectionArea" to="." method="_on_PlayerDetectionArea_area_exited"]
