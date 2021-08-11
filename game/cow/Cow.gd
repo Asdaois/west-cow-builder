@@ -41,7 +41,7 @@ func _process(delta):
 func _input(event) -> void:
 	if(_pickable):
 		if event.is_action_pressed("ui_down"):
-			_state = WANDER
+			_state = IDLE
 			_timer_start()
 		if event.is_action_released("ui_down"):
 			_timer_stop()
@@ -77,6 +77,8 @@ func _timer_stop():
 	_update_timer = false
 	if(_pickable):
 		label.text = "presiona v para \nrecoger la vaca"
+	else:
+		label.text = ""
 
 func _update_wander():
 	_state = _pick_random_state([IDLE, WANDER])
@@ -88,7 +90,6 @@ func _pick_random_state(state_list):
 
 func _accelerate_towards_point(point, delta): 
 	var direction = global_position.direction_to(point)
-	print("direction: " + str(direction))
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 

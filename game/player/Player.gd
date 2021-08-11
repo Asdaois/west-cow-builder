@@ -2,6 +2,7 @@ class_name Player
 extends KinematicBody2D
 
 # custom signals
+signal drop_nugget(nugget, direction, location)
 
 # enums - constant
 
@@ -18,6 +19,7 @@ export(Resource) var water
 # public - private variables
 var velocity := Vector2.ZERO
 var timer_flag = true
+var Nugget = preload("res://nugget/Nugget.tscn")
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -37,6 +39,12 @@ func _ready() -> void:
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
+
+func _input(event):
+	if event.get_action_strength("ui_up"):
+		if nuggets.quantity > 0:
+			nuggets.quantity -= 1
+			emit_signal("drop_nugget", Nugget, rand_range(0, 180), global_position)
 	
 # public - private functions
 func receive_damage(damage: int) -> void:
