@@ -9,6 +9,7 @@ extends StaticBody2D
 export var NUGGETS_EARNED = 3
 export(Resource) var cows
 export(Resource) var nuggets
+export(PackedScene) var nugget_scene = preload("res://nugget/Nugget.tscn")
 # public - private variables
 var _delivery = false
 
@@ -23,14 +24,19 @@ func _init() -> void:
 func _input(event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):
-			nuggets.quantity += NUGGETS_EARNED * cows.quantity
+			var nuggest_quantity_earned :int = NUGGETS_EARNED * cows.quantity
 			cows.quantity = 0
+			for i in range(nuggest_quantity_earned):
+				yield(get_tree().create_timer(0.2), "timeout")
+				_instantiate_nugget()
 
 func _ready() -> void:
 	pass
 
 # public - private functions
 
+func _instantiate_nugget():
+	GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
 
 # signals handlers
 

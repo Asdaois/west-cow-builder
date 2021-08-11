@@ -58,7 +58,6 @@ func _do_action(delta) -> void:
 
 
 func _change_state(new_state) -> void:
-	print_debug(EnemyState.keys()[new_state])
 	_current_state = new_state
 
 
@@ -100,9 +99,11 @@ func _move():
 func _attack_player() -> void:
 	if not target is Player:
 		return
-	target.receive_damage(1)
-	_change_state(EnemyState.COOLDOW_ATTACK)
-	attack_cooldown_timer.start()
+	
+	if _is_player_in_range:
+		target.receive_damage(1)
+		_change_state(EnemyState.COOLDOW_ATTACK)
+		attack_cooldown_timer.start()
 
 func _calculate_bounce(direction: Vector2, multiplier = 1) -> Vector2:
 	direction.normalized()
@@ -114,20 +115,19 @@ func _on_player_died() -> void:
 	target = null
 
 
-func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body is Nugget:
-		print_debug("Follow gold")
-		_change_state(EnemyState.SEARCH_GOLD)
-		target = body
-	elif body is Player:
-		_change_state(EnemyState.FOLLOW_PLAYER)
-		target = body
-
 
 func _on_AtackCooldownTimer_timeout() -> void:
 	if _current_state == EnemyState.COOLDOW_ATTACK:
 		_current_state = EnemyState.FOLLOW_PLAYER
 
+
+func _on_DetectionRange_body_entered(body: Node) -> void:
+	if body is Nugget:
+		_change_state(EnemyState.SEARCH_GOLD)
+		target = body
+	elif body is Player:
+		_change_state(EnemyState.FOLLOW_PLAYER)
+		target = body
 
 
 func _on_AttackRange_body_entered(body: Node) -> void:

@@ -45,14 +45,16 @@ func _input(event):
 			print_debug("One GOLD to the poor")
 		elif nuggets.quantity > 0:
 			nuggets.quantity -= 1
-			emit_signal("drop_nugget", nugget_scene, rand_range(0, 180), global_position)
-			GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
+			_instantiate_nugget()
 	
 # public - private functions
 func receive_damage(damage: int) -> void:
 	nuggets.quantity -= damage
+	_instantiate_nugget()
 
-
+func _instantiate_nugget():
+	GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
+	
 func _move_state(delta) -> void:
 	var input_vector := Vector2.ZERO
 	input_vector.x = (

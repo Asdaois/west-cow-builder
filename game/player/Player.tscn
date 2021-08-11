@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://player/Sprites/Player.png" type="Texture" id=2]
 [ext_resource path="res://data/player_stats/Cow.tres" type="Resource" id=3]
 [ext_resource path="res://data/player_stats/Water.tres" type="Resource" id=4]
 [ext_resource path="res://data/player_stats/Nugget.tres" type="Resource" id=5]
+[ext_resource path="res://nugget/Nugget.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=5]
 height = 80.1096
@@ -78,6 +79,7 @@ script = ExtResource( 1 )
 cows = ExtResource( 3 )
 nuggets = ExtResource( 5 )
 water = ExtResource( 4 )
+nugget_scene = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

@@ -95,10 +95,6 @@ func _accelerate_towards_point(point, delta):
 
 # signals handlers
 
-func _on_PlayerDetectionArea_area_entered(_area):
-	if _area.name == "PlayerArea":
-		label.text = "presiona v para \nrecoger la vaca"
-		_pickable = true
 
 func _on_PlayerDetectionArea_area_exited(area):
 	label.text = ""
@@ -107,3 +103,9 @@ func _on_PlayerDetectionArea_area_exited(area):
 func _on_PickupTimer_timeout():
 	(cow as ItemResource).quantity += 1
 	queue_free()
+
+
+func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
+	if body is Player:
+		label.text = "presiona v para \nrecoger la vaca"
+		_pickable = true
