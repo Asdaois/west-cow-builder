@@ -13,9 +13,11 @@ export var FRICTION = 200
 export var GRAVITY = 400
 export var WATER_CONSUMPTION_TIME = 3
 export var WATER_CONSUMPTION_QUANTITY = 4
-export(Resource) var cows
-export(Resource) var nuggets
-export(Resource) var water
+
+export(Resource) var cows = cows as ItemResource
+export(Resource) var nuggets = nuggets as ItemResource
+export(Resource) var water = water as ItemResource
+
 # public - private variables
 var velocity := Vector2.ZERO
 var timer_flag = true
@@ -30,10 +32,10 @@ onready var water_consumption := $WaterConsumption
 
 # built-in functions
 func _ready() -> void:
-	(nuggets as ItemResource).connect("quantity_changed", self, "_get_nugget")
-	(nuggets as ItemResource).connect('quantity_emptied', self, "_game_over")
-	(cows as ItemResource).connect("quantity_changed", self, "_get_cow")
-	(water as ItemResource).connect("quantity_changed", self, "_get_water")
+	nuggets.connect("quantity_changed", self, "_get_nugget")
+	nuggets.connect('quantity_emptied', self, "_game_over")
+	cows.connect("quantity_changed", self, "_get_cow")
+	water.connect("quantity_changed", self, "_get_water")
 	# TODO: Delete this for test
 	(nuggets as ItemResource).quantity += 500
 
