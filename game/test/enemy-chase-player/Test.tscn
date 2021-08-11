@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -6,8 +6,9 @@
 [ext_resource path="res://test/enemy-chase-player/Test.gd" type="Script" id=4]
 [ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://data/player_stats/Nugget.tres" type="Resource" id=6]
+[ext_resource path="res://data/test_stats/NuggetsInfinity.tres" type="Resource" id=7]
 
-[node name="Test" type="Node2D"]
+[node name="TEST_EnemyChasePlayer" type="Node2D"]
 script = ExtResource( 4 )
 Nuggets = ExtResource( 6 )
 
@@ -22,9 +23,11 @@ position = Vector2( 239.391, 494.648 )
 run_speed = 132.222
 recoy_in_x = 1.208
 recoy_in_y = 61.667
+_current_state = 0
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 721.492, 472.593 )
+nuggets = ExtResource( 7 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true

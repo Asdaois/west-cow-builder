@@ -41,5 +41,3 @@ position = Vector2( 559, 81 )
 position = Vector2( 286, 81 )
 
 [node name="CanvasLayer" parent="." instance=ExtResource( 5 )]
-
-[connection signal="drop_nugget" from="Player" to="." method="_on_Player_drop_nugget"]

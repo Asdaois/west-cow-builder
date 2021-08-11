@@ -10,17 +10,23 @@ radius = 200.0
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 4
-collision_mask = 11
+collision_mask = 9
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
 run_speed = 43.819
+wander_timer = NodePath("Timers/WanderTimer")
+attack_cooldown_timer = NodePath("Timers/AtackCooldownTimer")
 
-[node name="AtackCooldownTimer" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="WanderTimer" type="Timer" parent="Timers"]
+
+[node name="AtackCooldownTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[node name="Indian" type="Sprite" parent="."]
+[node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 1 )
 
@@ -30,6 +36,7 @@ shape = SubResource( 1 )
 
 [node name="DetectionRange" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource( 2 )
@@ -41,7 +48,7 @@ collision_layer = 0
 position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
-[connection signal="timeout" from="AtackCooldownTimer" to="." method="_on_AtackCooldownTimer_timeout"]
+[connection signal="timeout" from="Timers/AtackCooldownTimer" to="." method="_on_AtackCooldownTimer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_entered" from="PlayerInAttackRange" to="." method="_on_PlayerInAttackRange_body_entered"]
 [connection signal="body_exited" from="PlayerInAttackRange" to="." method="_on_PlayerInAttackRange_body_exited"]

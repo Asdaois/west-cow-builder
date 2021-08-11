@@ -73,7 +73,7 @@ height = 8.0
 [node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
-collision_mask = 10
+collision_mask = 8
 script = ExtResource( 1 )
 cows = ExtResource( 3 )
 nuggets = ExtResource( 5 )

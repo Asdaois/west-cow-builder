@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource( 1 )
-quantity = 0
-max_quantity = 0
+quantity = 5
+max_quantity = 5

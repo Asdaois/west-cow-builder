@@ -21,7 +21,7 @@ export(Resource) var water = water as ItemResource
 # public - private variables
 var velocity := Vector2.ZERO
 var timer_flag = true
-var Nugget = preload("res://nugget/Nugget.tscn")
+var NuggetScene = preload("res://nugget/Nugget.tscn")
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -36,17 +36,18 @@ func _ready() -> void:
 	nuggets.connect('quantity_emptied', self, "_game_over")
 	cows.connect("quantity_changed", self, "_get_cow")
 	water.connect("quantity_changed", self, "_get_water")
-	# TODO: Delete this for test
-	(nuggets as ItemResource).quantity += 500
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
 
 func _input(event):
-	if event.get_action_strength("ui_up"):
-		if nuggets.quantity > 0:
+	if event.is_action_pressed("drop_nugget"):
+		if nuggets.quantity == 1:
+			print_debug("One GOLD to the poor")
+		elif nuggets.quantity > 0:
 			nuggets.quantity -= 1
-			emit_signal("drop_nugget", Nugget, rand_range(0, 180), global_position)
+			emit_signal("drop_nugget", NuggetScene, rand_range(0, 180), global_position)
+			GameSignals.emit_signal("instanciate_item_in_world", NuggetScene, global_position)
 	
 # public - private functions
 func receive_damage(damage: int) -> void:

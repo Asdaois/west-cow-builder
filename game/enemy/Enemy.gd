@@ -4,7 +4,12 @@ extends KinematicBody2D
 # custom signals
 
 # enums - constant
-
+enum EnemyState {
+	FOLLOW_PLAYER,
+	SEARCH_GOLD,
+	WANDER,
+	COOLDOW_ATTACK
+}
 # exports variables
 export(float, 0, 200) var run_speed := 25
 export(float, 150, 450) var gravity := 300
@@ -12,44 +17,54 @@ export(float, 1, 2) var recoy_in_x : float = 1.5
 export(float, 0, 120) var recoy_in_y : float  = 60
 export(float, 0, 200) var rage_distance : float = 150
 export(float) var time_between_attacks : int = 1.5
+export(EnemyState) var _current_state = EnemyState.WANDER
+
 # public - private variables
 var velocity := Vector2.ZERO
-var player : Player
-var _can_follow_player := true
-var _can_attack_player := true
+var target : PhysicsBody2D
 var _collision : KinematicCollision2D
-var _is_player_overlapping := false
+var _is_player_in_range := false
 var _direction_options := [Vector2.RIGHT, Vector2.LEFT]
 # on ready variables
-onready var attackCooldownTimer := $AtackCooldownTimer
+export(NodePath) onready var wander_timer = get_node(wander_timer) as Timer
+export(NodePath) onready var attack_cooldown_timer = get_node(attack_cooldown_timer) as Timer
 # built-in functions
 
 func _ready() -> void:
 	GameStateManager.connect('game_over', self, "_on_player_died")
 
 
-func _process(delta: float) -> void:
-	_get_player_direction()
-	
-
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
-	if _can_follow_player:
-		_move_and_collide(delta)
-		if _is_collision_player() and _can_attack_player:
-			_attack_player()
-	else:
-		_move()
-		if is_on_floor():
-			_resume_follow_player()
+	_do_action(delta)
 
 
 # public - private functions
 
+func _do_action(delta) -> void:
+	match _current_state:
+		EnemyState.FOLLOW_PLAYER:
+			_get_player_direction()
+			_move_and_collide(delta)
+			if _is_collision_player():
+				_attack_player()
+		EnemyState.COOLDOW_ATTACK:
+			_move()
+			if is_on_floor():
+				_resume_follow_player()
+		EnemyState.SEARCH_GOLD:
+			pass
+
+
+func _change_state(new_state) -> void:
+	print_debug(EnemyState.keys()[new_state])
+	_current_state = new_state
+
+
 func _resume_follow_player() -> void:
 	velocity.x = 0 # Stop the movement in x
 	yield(get_tree().create_timer(0.5), 'timeout')
-	_can_follow_player = true
+	_change_state(EnemyState.FOLLOW_PLAYER)
 
 
 func _add_gravity(delta : float) -> void:
@@ -58,22 +73,21 @@ func _add_gravity(delta : float) -> void:
 
 
 func _get_player_direction() -> void:
-	if player != null and _can_follow_player:
+	if target != null:
 		velocity.x = 0
-		velocity = (position.direction_to(player.position) * _get_better_speed())
+		velocity = (position.direction_to(target.position) * _get_better_speed())
 		velocity = velocity * Vector2.RIGHT
 
 
 func _get_better_speed() -> float:
-	if player == null:
+	if target == null:
 		return float(0)
 	# This formula is more quickli A^2 = B^2 + C^2 
-	var distance_to_player = position.distance_squared_to(player.position)
+	var distance_to_player = position.distance_squared_to(target.position)
 	var distance_to_accelerate = pow(rage_distance, 2)
 	if(distance_to_accelerate > distance_to_player):
 		return run_speed * 1.5
 	return (run_speed as float)
-
 
 
 func _move():
@@ -93,62 +107,66 @@ func _is_collision_player() -> bool:
 
 func _attack_player() -> void:
 	_disable_collision_with_player()
-	player.receive_damage(1)
-	_can_follow_player = false
-	_can_attack_player = false
-	attackCooldownTimer.start()
+	target.receive_damage(1)
+	_change_state(EnemyState.COOLDOW_ATTACK)
+	attack_cooldown_timer.start()
 	_do_attack_move()
 
 
 func _do_attack_move() -> void:
 	velocity.y = -60 - rand_range(0, recoy_in_y)
 	velocity.x += velocity.x / 4
-	if not _is_player_overlapping:
+	if not _is_player_in_range:
 		velocity = _calculate_bounce(_collision.normal)
 	else:
 		_direction_options.shuffle()
 		velocity = _calculate_bounce(_direction_options[0], 2)
 		velocity.y = -10
 
+
 func _calculate_bounce(direction: Vector2, multiplier = 1) -> Vector2:
-	 return velocity.bounce(direction) * (rand_range(1, recoy_in_x) * multiplier)
+	return velocity.bounce(direction) * (rand_range(1, recoy_in_x) * multiplier)
+
 
 func _disable_collision_with_player() -> void:
 	set_collision_mask_bit(0, false)
 	pass
 
+
 func _enable_collision_with_player() -> void:
-	if _is_player_overlapping:
+	if _is_player_in_range:
 		return
 	set_collision_mask_bit(0, true)
-# signals handlers
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		player = body
-	pass
+	if body is Nugget:
+		print_debug("Follow gold")
+		_change_state(EnemyState.SEARCH_GOLD)
+		target = body
+	elif body is Player:
+		_change_state(EnemyState.FOLLOW_PLAYER)
+		target = body
 
 
 func _on_AtackCooldownTimer_timeout() -> void:
-	_can_attack_player = true
 	_enable_collision_with_player()
-	if _is_player_overlapping:
+	if _is_player_in_range:
 		_attack_player()
 
 
 func _on_player_died() -> void:
-	_can_attack_player = false
-	_can_follow_player = false
-	player = null
+	_change_state(EnemyState.WANDER)
+	target = null
 
 
 func _on_PlayerInAttackRange_body_entered(body: Node) -> void:
-	if body.is_in_group("player"):
-		_is_player_overlapping = true
+	if body is Player:
+		_is_player_in_range = true
+		_change_state(EnemyState.FOLLOW_PLAYER)
 
 
 func _on_PlayerInAttackRange_body_exited(body: Node) -> void:
-	if body.is_in_group("player"):
-		_is_player_overlapping = false
+	if body is Player:
+		_is_player_in_range = false
 		_enable_collision_with_player()
