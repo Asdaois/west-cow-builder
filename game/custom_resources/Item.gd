@@ -18,7 +18,7 @@ func set_max_quantity(value):
 	emit_signal('max_quantity_changed', max_quantity)
 	
 func set_quantity(value):
-	quantity = value
+	quantity = max(0, value)
 	emit_signal('quantity_changed', quantity)
 	if(quantity <= 0):
 		emit_signal('quantity_emptied')

@@ -2,16 +2,19 @@ class_name Player
 extends KinematicBody2D
 
 # custom signals
-signal drop_nugget(nugget, direction, location)
 
 # enums - constant
+enum {
+	WALK,
+	RUN,
+	TIRED
+}
 
 # exports variables
-export var ACCELERATION = 100
 export var MAX_SPEED = 400
-export var FRICTION = 200
-export var GRAVITY = 400
-export var WATER_CONSUMPTION_TIME = 3
+export var FRICTION = 400
+export var GRAVITY = 4000
+export var WATER_CONSUMPTION_TIME = 1
 export var WATER_CONSUMPTION_QUANTITY = 4
 
 export(Resource) var cows = cows as ItemResource
@@ -19,8 +22,14 @@ export(Resource) var nuggets = nuggets as ItemResource
 export(Resource) var water = water as ItemResource
 export(PackedScene) var nugget_scene
 # public - private variables
+var NORMAL_SPEED = MAX_SPEED / 2
+var RUNNING_SPEED = MAX_SPEED
+var TIRED_SPEED = MAX_SPEED / 4
+var WATER_NORMAL = WATER_CONSUMPTION_QUANTITY
+var WATER_RUNNING = WATER_CONSUMPTION_QUANTITY * 3
 var velocity := Vector2.ZERO
 var timer_flag = true
+var state
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -28,6 +37,7 @@ onready var label := $Label
 onready var label2 := $Label2
 onready var label3 := $Label3
 onready var water_consumption := $WaterConsumption
+onready var running_timer := $RunningTimer
 
 # built-in functions
 func _ready() -> void:
@@ -47,6 +57,17 @@ func _input(event):
 			nuggets.quantity -= 1
 			_instantiate_nugget()
 	
+	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+		if state != TIRED:
+			state = WALK
+			if(event.is_echo() != true and running_timer.time_left > 0):
+				state = RUN
+			running_timer.start(0.5)
+
+func _process(delta):
+	if(water.quantity == 0):
+		state = TIRED
+
 # public - private functions
 func receive_damage(damage: int) -> void:
 	nuggets.quantity -= damage
@@ -66,9 +87,13 @@ func _move_state(delta) -> void:
 			animationPlayer.play("WalkLeft")
 		else:
 			animationPlayer.play("WalkRight")
-		velocity = (
-			velocity.move_toward(input_vector * MAX_SPEED, ACCELERATION * delta)
-		)
+		match state:
+			WALK:
+				velocity = input_vector * NORMAL_SPEED
+			RUN:
+				velocity = input_vector * RUNNING_SPEED
+			TIRED:
+				velocity = input_vector * TIRED_SPEED
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 	_add_gravity(delta)
@@ -105,5 +130,9 @@ func _game_over():
 
 # signals handlers
 func _on_WaterConsumption_timeout():
-	water.quantity -= WATER_CONSUMPTION_QUANTITY
+	match state:
+		WALK:
+			water.quantity -= WATER_NORMAL
+		RUN:
+			water.quantity -= WATER_RUNNING
 	timer_flag = true
