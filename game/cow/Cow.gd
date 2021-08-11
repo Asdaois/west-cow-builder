@@ -19,7 +19,7 @@ export(Resource) var cow
 # public - private variables
 var _pickable = false
 var _update_timer = false
-var _state = IDLE
+var _state
 var velocity := Vector2.ZERO
 
 # on ready variables
@@ -31,6 +31,7 @@ onready var sprite := $Sprite
 # built-in functions
 
 func _ready():
+	randomize()
 	_state = _pick_random_state([IDLE, WANDER])
 
 func _process(delta):
@@ -40,6 +41,7 @@ func _process(delta):
 func _input(event) -> void:
 	if(_pickable):
 		if event.is_action_pressed("ui_down"):
+			_state = WANDER
 			_timer_start()
 		if event.is_action_released("ui_down"):
 			_timer_stop()
@@ -53,13 +55,14 @@ func _physics_process(delta):
 			if wander_controller.get_time_left() == 0:
 				_update_wander()
 		WANDER:
-			if wander_controller.get_time_left() == 0:
-				_update_wander()
 			_accelerate_towards_point(wander_controller.target_position, delta)
 			if global_position.distance_to(wander_controller.target_position) <= 4:
 				_update_wander()
+			if wander_controller.get_time_left() == 0:
+				_update_wander()
 	_add_gravity(delta)
 	velocity = move_and_slide(velocity)
+
 # public - private functions
 func _add_gravity(delta) -> void:
 	if !is_on_floor():
@@ -77,7 +80,7 @@ func _timer_stop():
 
 func _update_wander():
 	_state = _pick_random_state([IDLE, WANDER])
-	wander_controller.start_wander_timer(rand_range(1, 3))
+	wander_controller.start_wander_timer(rand_range(2, 4))
 
 func _pick_random_state(state_list):
 	state_list.shuffle()
@@ -85,6 +88,7 @@ func _pick_random_state(state_list):
 
 func _accelerate_towards_point(point, delta): 
 	var direction = global_position.direction_to(point)
+	print("direction: " + str(direction))
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 

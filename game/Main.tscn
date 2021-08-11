@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://cow/Cow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://base/Base.tscn" type="PackedScene" id=4]
 [ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=5]
-[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node2D"]
 
@@ -25,21 +24,18 @@ position = Vector2( 34.75, 130.75 )
 floor_length = 100
 
 [node name="Cow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 129, 73 )
+position = Vector2( 420, 81 )
 
 [node name="Cow2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 45, 75 )
+position = Vector2( 349, 81 )
 
 [node name="Cow3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 294, 73 )
+position = Vector2( 485, 81 )
 
 [node name="Cow4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 449, 71 )
+position = Vector2( 559, 81 )
 
 [node name="Cow5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 385, 71 )
-
-[node name="Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( 507, 21 )
+position = Vector2( 286, 81 )
 
 [node name="CanvasLayer" parent="." instance=ExtResource( 5 )]
