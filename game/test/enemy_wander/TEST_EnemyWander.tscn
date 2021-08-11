@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test/enemy_wander/ItemCreator.gd" type="Script" id=3]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://data/test_stats/NuggetsInfinity.tres" type="Resource" id=5]
+
+[node name="TEST_EnemyWander" type="Node2D"]
+position = Vector2( -718.729, 68.4277 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1722.16, 356.54 )
+nuggets = ExtResource( 5 )
+
+[node name="FloorGenerator" parent="." instance=ExtResource( 1 )]
+position = Vector2( 33.75, 451.75 )
+floor_length = 40
+
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1177.75, 383.384 )
+_current_state = 0
+
+[node name="ItemCreator" type="Node2D" parent="."]
+script = ExtResource( 3 )
