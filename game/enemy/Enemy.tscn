@@ -24,6 +24,7 @@ attack_cooldown_timer = NodePath("Timers/AtackCooldownTimer")
 [node name="WanderTimer" type="Timer" parent="Timers"]
 
 [node name="AtackCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
 one_shot = true
 
 [node name="Sprite" type="Sprite" parent="."]

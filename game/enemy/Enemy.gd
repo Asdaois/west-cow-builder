@@ -117,8 +117,12 @@ func _on_player_died() -> void:
 
 
 func _on_AtackCooldownTimer_timeout() -> void:
-	if _current_state == EnemyState.COOLDOW_ATTACK:
-		_current_state = EnemyState.FOLLOW_PLAYER
+	var overlaping_bodies = $DetectionRange.get_overlapping_bodies()
+	for body in overlaping_bodies:
+		if body is Player:
+			print_debug("follow player")
+			_change_state(EnemyState.FOLLOW_PLAYER)
+			target = body
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
@@ -149,3 +153,4 @@ func _on_DetectionRange_body_exited(body: Node) -> void:
 	if body is Nugget:
 		velocity = Vector2.ZERO
 		_change_state(EnemyState.WANDER)
+		attack_cooldown_timer.start()
