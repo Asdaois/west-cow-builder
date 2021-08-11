@@ -7,7 +7,9 @@ func _ready() -> void:
 func _on_instantiate_item_in_world(Item, _position: Vector2):
 	var item = Item.instance()
 	get_parent().add_child(item)
-	item.global_position = _position
+	item.global_position = _position + Vector2.UP * 40
 	
 	if item is RigidBody2D:
+		var force_applied_to_coin : Vector2 = Vector2.UP
+		item.apply_impulse(Vector2.ZERO, force_applied_to_coin * 80)
 		print_debug("I'm a rigidbody")

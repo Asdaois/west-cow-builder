@@ -17,11 +17,10 @@ export var WATER_CONSUMPTION_QUANTITY = 4
 export(Resource) var cows = cows as ItemResource
 export(Resource) var nuggets = nuggets as ItemResource
 export(Resource) var water = water as ItemResource
-
+export(PackedScene) var nugget_scene
 # public - private variables
 var velocity := Vector2.ZERO
 var timer_flag = true
-var NuggetScene = preload("res://nugget/Nugget.tscn")
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -46,8 +45,8 @@ func _input(event):
 			print_debug("One GOLD to the poor")
 		elif nuggets.quantity > 0:
 			nuggets.quantity -= 1
-			emit_signal("drop_nugget", NuggetScene, rand_range(0, 180), global_position)
-			GameSignals.emit_signal("instanciate_item_in_world", NuggetScene, global_position)
+			emit_signal("drop_nugget", nugget_scene, rand_range(0, 180), global_position)
+			GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
 	
 # public - private functions
 func receive_damage(damage: int) -> void:

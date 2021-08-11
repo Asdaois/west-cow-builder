@@ -6,8 +6,8 @@
 [ext_resource path="res://data/player_stats/Water.tres" type="Resource" id=4]
 [ext_resource path="res://data/player_stats/Nugget.tres" type="Resource" id=5]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 45, 25 )
+[sub_resource type="CapsuleShape2D" id=5]
+height = 80.1096
 
 [sub_resource type="Animation" id=2]
 resource_name = "WalkLeft"
@@ -83,8 +83,9 @@ water = ExtResource( 4 )
 texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 11 )
-shape = SubResource( 1 )
+position = Vector2( 3.70811, 25.3027 )
+rotation = 1.5708
+shape = SubResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/WalkLeft = SubResource( 2 )

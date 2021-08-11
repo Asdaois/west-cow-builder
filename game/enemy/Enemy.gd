@@ -1,5 +1,5 @@
-# class_name
 extends KinematicBody2D
+class_name Enemy
 
 # custom signals
 
@@ -22,9 +22,9 @@ export(EnemyState) var _current_state = EnemyState.WANDER
 # public - private variables
 var velocity := Vector2.ZERO
 var target : PhysicsBody2D
-var _collision : KinematicCollision2D
 var _is_player_in_range := false
 var _direction_options := [Vector2.RIGHT, Vector2.LEFT]
+
 # on ready variables
 export(NodePath) onready var wander_timer = get_node(wander_timer) as Timer
 export(NodePath) onready var attack_cooldown_timer = get_node(attack_cooldown_timer) as Timer
@@ -37,22 +37,23 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
 	_do_action(delta)
-
+	_move()
 
 # public - private functions
 
 func _do_action(delta) -> void:
 	match _current_state:
 		EnemyState.FOLLOW_PLAYER:
-			_get_player_direction()
-			_move_and_collide(delta)
-			if _is_collision_player():
-				_attack_player()
+			if target == null:
+				return
+			_get_target_direction()
+			_attack_player()
 		EnemyState.COOLDOW_ATTACK:
-			_move()
-			if is_on_floor():
-				_resume_follow_player()
+			yield(attack_cooldown_timer, "timeout")
+			_resume_follow_player()
 		EnemyState.SEARCH_GOLD:
+			_get_target_direction()
+		EnemyState.WANDER:
 			pass
 
 
@@ -72,11 +73,13 @@ func _add_gravity(delta : float) -> void:
 		velocity.y += delta * gravity
 
 
-func _get_player_direction() -> void:
-	if target != null:
-		velocity.x = 0
-		velocity = (position.direction_to(target.position) * _get_better_speed())
-		velocity = velocity * Vector2.RIGHT
+func _get_target_direction() -> void:
+	if not target:
+		return
+	
+	velocity.x = 0
+	velocity = (position.direction_to(target.position) * _get_better_speed())
+	velocity = velocity * Vector2.RIGHT
 
 
 func _get_better_speed() -> float:
@@ -94,49 +97,21 @@ func _move():
 	velocity = move_and_slide(velocity, Vector2.UP)
 
 
-func _move_and_collide(delta : float):
-	_collision = move_and_collide(velocity * delta)
-
-
-func _is_collision_player() -> bool:
-	if _collision:
-		if (_collision.collider as Node2D).is_in_group("player"):
-			return true
-	return false
-
-
 func _attack_player() -> void:
-	_disable_collision_with_player()
+	if not target is Player:
+		return
 	target.receive_damage(1)
 	_change_state(EnemyState.COOLDOW_ATTACK)
 	attack_cooldown_timer.start()
-	_do_attack_move()
-
-
-func _do_attack_move() -> void:
-	velocity.y = -60 - rand_range(0, recoy_in_y)
-	velocity.x += velocity.x / 4
-	if not _is_player_in_range:
-		velocity = _calculate_bounce(_collision.normal)
-	else:
-		_direction_options.shuffle()
-		velocity = _calculate_bounce(_direction_options[0], 2)
-		velocity.y = -10
-
 
 func _calculate_bounce(direction: Vector2, multiplier = 1) -> Vector2:
+	direction.normalized()
 	return velocity.bounce(direction) * (rand_range(1, recoy_in_x) * multiplier)
 
 
-func _disable_collision_with_player() -> void:
-	set_collision_mask_bit(0, false)
-	pass
-
-
-func _enable_collision_with_player() -> void:
-	if _is_player_in_range:
-		return
-	set_collision_mask_bit(0, true)
+func _on_player_died() -> void:
+	_change_state(EnemyState.WANDER)
+	target = null
 
 
 func _on_DetectionRange_body_entered(body: Node) -> void:
@@ -150,23 +125,27 @@ func _on_DetectionRange_body_entered(body: Node) -> void:
 
 
 func _on_AtackCooldownTimer_timeout() -> void:
-	_enable_collision_with_player()
-	if _is_player_in_range:
-		_attack_player()
+	if _current_state == EnemyState.COOLDOW_ATTACK:
+		_current_state = EnemyState.FOLLOW_PLAYER
 
 
-func _on_player_died() -> void:
-	_change_state(EnemyState.WANDER)
-	target = null
 
-
-func _on_PlayerInAttackRange_body_entered(body: Node) -> void:
+func _on_AttackRange_body_entered(body: Node) -> void:
 	if body is Player:
+		target = body
 		_is_player_in_range = true
-		_change_state(EnemyState.FOLLOW_PLAYER)
+		
+	if body is Nugget:
+		target = null
+		body.queue_free()
 
 
-func _on_PlayerInAttackRange_body_exited(body: Node) -> void:
+func _on_AttackRange_body_exited(body: Node) -> void:
 	if body is Player:
 		_is_player_in_range = false
-		_enable_collision_with_player()
+
+
+func _on_DetectionRange_body_exited(body: Node) -> void:
+	if body is Nugget:
+		velocity = Vector2.ZERO
+		_change_state(EnemyState.WANDER)

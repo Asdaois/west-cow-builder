@@ -10,7 +10,7 @@ radius = 200.0
 
 [node name="Enemy" type="KinematicBody2D"]
 collision_layer = 4
-collision_mask = 9
+collision_mask = 8
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -41,14 +41,16 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
 shape = SubResource( 2 )
 
-[node name="PlayerInAttackRange" type="Area2D" parent="."]
+[node name="AttackRange" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInAttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
 position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
 [connection signal="timeout" from="Timers/AtackCooldownTimer" to="." method="_on_AtackCooldownTimer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
-[connection signal="body_entered" from="PlayerInAttackRange" to="." method="_on_PlayerInAttackRange_body_entered"]
-[connection signal="body_exited" from="PlayerInAttackRange" to="." method="_on_PlayerInAttackRange_body_exited"]
+[connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
+[connection signal="body_entered" from="AttackRange" to="." method="_on_AttackRange_body_entered"]
+[connection signal="body_exited" from="AttackRange" to="." method="_on_AttackRange_body_exited"]
