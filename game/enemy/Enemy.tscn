@@ -22,6 +22,7 @@ attack_cooldown_timer = NodePath("Timers/AtackCooldownTimer")
 [node name="Timers" type="Node" parent="."]
 
 [node name="WanderTimer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="AtackCooldownTimer" type="Timer" parent="Timers"]
 wait_time = 2.0
@@ -50,6 +51,7 @@ collision_mask = 3
 position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
+[connection signal="timeout" from="Timers/WanderTimer" to="." method="_on_WanderTimer_timeout"]
 [connection signal="timeout" from="Timers/AtackCooldownTimer" to="." method="_on_AtackCooldownTimer_timeout"]
 [connection signal="body_entered" from="DetectionRange" to="." method="_on_DetectionRange_body_entered"]
 [connection signal="body_exited" from="DetectionRange" to="." method="_on_DetectionRange_body_exited"]
