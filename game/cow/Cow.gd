@@ -95,7 +95,7 @@ func _accelerate_towards_point(point, delta):
 
 # signals handlers
 func _on_PickupTimer_timeout():
-	(cow as ItemResource).quantity += 1
+	cow.quantity += 1
 	queue_free()
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
