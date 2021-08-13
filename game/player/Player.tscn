@@ -136,10 +136,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WaterConsumption" type="Timer" parent="."]
-one_shot = true
-
 [node name="RunningTimer" type="Timer" parent="."]
 one_shot = true
-
-[connection signal="timeout" from="WaterConsumption" to="." method="_on_WaterConsumption_timeout"]

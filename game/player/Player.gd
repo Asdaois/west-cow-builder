@@ -15,11 +15,11 @@ export var MAX_SPEED = 400
 export var FRICTION = 400
 export var GRAVITY = 4000
 export var WATER_CONSUMPTION_TIME = 1
-export var WATER_CONSUMPTION_QUANTITY = 4
+export var WATER_CONSUMPTION_QUANTITY = 6
 
 export(Resource) var cows = cows as ItemResource
 export(Resource) var nuggets = nuggets as ItemResource
-export(Resource) var water = water as ItemResource
+export(Resource) var water = water
 export(PackedScene) var nugget_scene
 # public - private variables
 var NORMAL_SPEED = MAX_SPEED / 2
@@ -28,7 +28,6 @@ var TIRED_SPEED = MAX_SPEED / 4
 var WATER_NORMAL = WATER_CONSUMPTION_QUANTITY
 var WATER_RUNNING = WATER_CONSUMPTION_QUANTITY * 3
 var velocity := Vector2.ZERO
-var timer_flag = true
 var state
 
 # on ready variables
@@ -36,7 +35,6 @@ onready var animationPlayer := $AnimationPlayer
 onready var label := $Label
 onready var label2 := $Label2
 onready var label3 := $Label3
-onready var water_consumption := $WaterConsumption
 onready var running_timer := $RunningTimer
 
 # built-in functions
@@ -48,6 +46,12 @@ func _ready() -> void:
 
 func _physics_process(delta) -> void:
 	_move_state(delta)
+	if(velocity.x != 0):
+		match state:
+			WALK:
+				water.quantity -= stepify(WATER_NORMAL * delta, 0.01)
+			RUN:
+				water.quantity -= stepify(WATER_RUNNING * delta, 0.01)
 
 func _input(event):
 	if event.is_action_pressed("drop_nugget"):
@@ -105,15 +109,6 @@ func _add_gravity(delta) -> void:
 
 func _move() -> void:
 	velocity = move_and_slide(velocity)
-	if (timer_flag):
-		_water_timer()
-
-func _water_timer() -> void:
-	if(velocity.x != 0):
-		water_consumption.start(WATER_CONSUMPTION_TIME)
-		timer_flag = false
-	else:
-		water_consumption.stop()
 
 func _get_nugget(value):
 	label.text = "Nuggets: " + String(value)
@@ -129,10 +124,3 @@ func _game_over():
 	queue_free()
 
 # signals handlers
-func _on_WaterConsumption_timeout():
-	match state:
-		WALK:
-			water.quantity -= WATER_NORMAL
-		RUN:
-			water.quantity -= WATER_RUNNING
-	timer_flag = true
