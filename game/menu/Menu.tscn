@@ -5,7 +5,7 @@
 [ext_resource path="res://menu/NewGameButton.gd" type="Script" id=3]
 [ext_resource path="res://menu/PauseMenuPopup.gd" type="Script" id=4]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="Menu" type="CanvasLayer"]
 
 [node name="Popup" type="Popup" parent="."]
 pause_mode = 2

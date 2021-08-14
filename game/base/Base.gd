@@ -21,14 +21,15 @@ onready var label := $Label
 func _init() -> void:
 	pass
 
-func _input(event):
+func _input(_event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):
 			var nuggest_quantity_earned :int = NUGGETS_EARNED * cows.quantity
 			cows.quantity = 0
-			for i in range(nuggest_quantity_earned):
+			for _i in range(nuggest_quantity_earned):
 				yield(get_tree().create_timer(0.2), "timeout")
 				_instantiate_nugget()
+				
 
 func _ready() -> void:
 	pass
@@ -50,6 +51,6 @@ func _on_DetectionArea_area_entered(area):
 			label.text = "No tienes vacas"
 
 
-func _on_DetectionArea_area_exited(area):
+func _on_DetectionArea_area_exited(_area):
 	label.text = ""
 	_delivery = false

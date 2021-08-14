@@ -1,7 +1,8 @@
 extends Node2D
 
 func _ready() -> void:
-	$Player.connect("drop_nugget", self, "_on_Player_drop_nugget")
+	# $Player.connect("drop_nugget", self, "_on_Player_drop_nugget")
+	pass
 
 func _on_Player_drop_nugget(nugget, direction, location):
 	var n = nugget.instance()
