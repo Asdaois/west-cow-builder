@@ -1,5 +1,5 @@
-# class_name
 extends KinematicBody2D
+class_name Cow
 
 
 enum {
@@ -104,6 +104,11 @@ func _accelerate_towards_point(point, delta):
 func _disable_picking():
 	label.text = ""
 	_pickable = false
+
+
+func _enable_picking():
+	label.text = "presiona v para \nrecoger la vaca"
+	_pickable = true
 # signals handlers
 
 
@@ -113,15 +118,21 @@ func _on_PickupTimer_timeout():
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
 	if body is Player:
-		if body.current_cow != null:
-			body.current_cow._disable_picking()
-		body.current_cow = self
-		label.text = "presiona v para \nrecoger la vaca"
-		_pickable = true
+		if body.current_target == null:
+			body.current_target = self
+			_enable_picking()
+			
+		if body.current_target.is_in_group("broken_cart"):
+			return
+		
+		# if body.current_target.is_in_group("cow"):
+			# body.current_target._disable_picking()
 
 func _on_PlayerDetectionArea_body_exited(body):
 	if body is Player:
-		if body.current_cow == self :
+		if body.current_target == self :
 			_disable_picking()
-			body.current_cow = null
+			body.current_target = null
+			yield(get_tree().create_timer(0.4),"timeout")
+			update
 

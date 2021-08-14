@@ -36,12 +36,13 @@ export(NodePath) onready var attack_cooldown_timer = get_node(attack_cooldown_ti
 func _ready() -> void:
 	# Ininitialize statemachine
 	_change_state(_current_state)
-	GameStateManager.connect('game_over', self, "_on_player_died")
+	assert(GameStateManager.connect('game_over', self, "_on_player_died") == 0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	_do_action()
 	pass
+
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
 	_move()

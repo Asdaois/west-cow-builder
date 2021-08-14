@@ -31,7 +31,30 @@ var WATER_NORMAL = WATER_CONSUMPTION_QUANTITY
 var WATER_RUNNING = WATER_CONSUMPTION_QUANTITY * 3
 var velocity := Vector2.ZERO
 var state
-var current_cow : Node
+
+var current_target : Node setget _set_current_target
+
+func _set_current_target(new_value : Node):
+	if new_value == null:
+		current_target = null
+		return
+		
+	if current_target == null:
+		current_target = new_value
+		return
+	
+	if current_target.is_in_group("broken_cart"):
+		return
+	
+	if new_value.is_in_group("broken_cart"):
+		if current_target.is_in_group("cow"):
+			(current_target)._disable_picking()
+		current_target = new_value
+
+
+	current_target = new_value
+
+
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
 onready var label := $Label
@@ -126,6 +149,3 @@ func _game_over():
 	queue_free()
 
 # signals handlers
-
-
-			

@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Cow",
+"language": "GDScript",
+"path": "res://cow/Cow.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://enemy/Enemy.gd"
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://player/Player.gd"
 } ]
 _global_script_class_icons={
+"Cow": "",
 "Enemy": "",
 "ItemResource": "",
 "Nugget": "",
@@ -95,6 +101,7 @@ drop_nugget={
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Floor"
 2d_physics/layer_5="Cow"
+2d_physics/layer_6="Broken Cart"
 
 [physics]
 
