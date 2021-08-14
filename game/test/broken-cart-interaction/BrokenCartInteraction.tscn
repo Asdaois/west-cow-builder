@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://npc/BrokenCart.tscn" type="PackedScene" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://floor-generator/FloorGenerator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://npc/NPC.tscn" type="PackedScene" id=4]
 
 [node name="BrokenCartInteraction" type="Node2D"]
 
@@ -15,3 +16,9 @@ position = Vector2( 292.215, 418.722 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 173.986, 389.118 )
+
+[node name="NPC" parent="." instance=ExtResource( 4 )]
+position = Vector2( 359.293, 414.064 )
+
+[node name="NPC2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 238.131, 414.064 )

@@ -9,6 +9,7 @@ extents = Vector2( 34.5, 26 )
 [node name="BrokenCart" type="Area2D" groups=[
 "broken_cart",
 ]]
+z_index = -2
 collision_layer = 32
 script = ExtResource( 2 )
 __meta__ = {
