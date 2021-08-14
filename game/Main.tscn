@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
 [ext_resource path="res://cow/Cow.tscn" type="PackedScene" id=3]
-[ext_resource path="res://base/Base.tscn" type="PackedScene" id=4]
+[ext_resource path="res://buildings/base/Town_hall.tscn" type="PackedScene" id=4]
 [ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Main.gd" type="Script" id=6]
 [ext_resource path="res://item-creator/ItemCreator.tscn" type="PackedScene" id=7]
+[ext_resource path="res://buildings/barricade/Barricade.tscn" type="PackedScene" id=8]
+[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=9]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 6 )
@@ -15,8 +17,11 @@ script = ExtResource( 6 )
 position = Vector2( 34.75, 130.75 )
 floor_length = 100
 
-[node name="Base" parent="." instance=ExtResource( 4 )]
-position = Vector2( 997, 46 )
+[node name="Town_hall" parent="." instance=ExtResource( 4 )]
+position = Vector2( 892, 65 )
+
+[node name="Barricade" parent="." instance=ExtResource( 8 )]
+position = Vector2( 755, 81 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 217, 6 )
@@ -40,9 +45,9 @@ position = Vector2( 69.9271, 71.802 )
 position = Vector2( 518.258, 27.8014 )
 
 [node name="Cow4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 708.531, 21.8553 )
-
-[node name="Cow5" parent="." instance=ExtResource( 3 )]
 position = Vector2( 282.795, -29.2806 )
+
+[node name="Enemy" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1080, 66 )
 
 [editable path="Player"]
