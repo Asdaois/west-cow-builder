@@ -19,8 +19,10 @@ export var WATER_CONSUMPTION_QUANTITY = 6
 
 export(Resource) var cows = cows as ItemResource
 export(Resource) var nuggets = nuggets as ItemResource
-export(Resource) var water = water
+export(Resource) var water = water as ItemResource
 export(PackedScene) var nugget_scene
+export(NodePath) onready var player_area = get_node(player_area) as Area2D
+
 # public - private variables
 var NORMAL_SPEED = MAX_SPEED / 2
 var RUNNING_SPEED = MAX_SPEED
@@ -29,7 +31,7 @@ var WATER_NORMAL = WATER_CONSUMPTION_QUANTITY
 var WATER_RUNNING = WATER_CONSUMPTION_QUANTITY * 3
 var velocity := Vector2.ZERO
 var state
-
+var current_cow : Node
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
 onready var label := $Label
@@ -68,7 +70,7 @@ func _input(event):
 				state = RUN
 			running_timer.start(0.5)
 
-func _process(delta):
+func _process(_delta):
 	if(water.quantity == 0):
 		state = TIRED
 
@@ -124,3 +126,6 @@ func _game_over():
 	queue_free()
 
 # signals handlers
+
+
+			

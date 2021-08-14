@@ -76,11 +76,15 @@ height = 8.0
 ]]
 collision_mask = 8
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 MAX_SPEED = 200
 cows = ExtResource( 3 )
 nuggets = ExtResource( 5 )
 water = ExtResource( 4 )
 nugget_scene = ExtResource( 6 )
+player_area = NodePath("PlayerArea")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -97,10 +101,7 @@ anims/WalkRight = SubResource( 3 )
 [node name="PlayerArea" type="Area2D" parent="."]
 position = Vector2( -38, 24 )
 collision_layer = 0
-collision_mask = 2
-__meta__ = {
-"_edit_group_": true
-}
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
 rotation = 1.5708
@@ -138,3 +139,6 @@ __meta__ = {
 
 [node name="RunningTimer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="body_entered" from="PlayerArea" to="." method="_on_PlayerArea_detect_body"]
+[connection signal="body_exited" from="PlayerArea" to="." method="_on_PlayerArea_detect_body"]

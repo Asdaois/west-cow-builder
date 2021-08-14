@@ -26,21 +26,23 @@ position = Vector2( -1, -7 )
 current = true
 zoom = Vector2( 0.3, 0.3 )
 
-[node name="Cow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 420, 81 )
-
-[node name="Cow2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 349, 81 )
-
-[node name="Cow3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 485, 81 )
-
-[node name="Cow4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 559, 81 )
-
-[node name="Cow5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 286, 81 )
-
 [node name="CanvasLayer" parent="." instance=ExtResource( 5 )]
 
 [node name="ItemCreator" parent="." instance=ExtResource( 7 )]
+
+[node name="Cow" parent="." instance=ExtResource( 3 )]
+position = Vector2( 396.959, 63.4776 )
+
+[node name="Cow2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 69.9271, 71.802 )
+
+[node name="Cow3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 518.258, 27.8014 )
+
+[node name="Cow4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 708.531, 21.8553 )
+
+[node name="Cow5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 282.795, -29.2806 )
+
+[editable path="Player"]

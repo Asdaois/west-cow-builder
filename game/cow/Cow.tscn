@@ -11,8 +11,10 @@ height = 10.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 20.025
 
-[node name="Cow" type="KinematicBody2D"]
-collision_layer = 0
+[node name="Cow" type="KinematicBody2D" groups=[
+"cow",
+]]
+collision_layer = 16
 collision_mask = 8
 script = ExtResource( 2 )
 __meta__ = {
@@ -28,7 +30,9 @@ position = Vector2( 0, 3 )
 rotation = 1.5708
 shape = SubResource( 1 )
 
-[node name="PlayerDetectionArea" type="Area2D" parent="."]
+[node name="PlayerDetectionArea" type="Area2D" parent="." groups=[
+"cow",
+]]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
