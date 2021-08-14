@@ -133,6 +133,3 @@ func _on_PlayerDetectionArea_body_exited(body):
 		if body.current_target == self :
 			_disable_picking()
 			body.current_target = null
-			yield(get_tree().create_timer(0.4),"timeout")
-			update
-
