@@ -41,10 +41,10 @@ onready var running_timer := $RunningTimer
 
 # built-in functions
 func _ready() -> void:
-	nuggets.connect("quantity_changed", self, "_get_nugget")
-	nuggets.connect('quantity_emptied', self, "_game_over")
-	cows.connect("quantity_changed", self, "_get_cow")
-	water.connect("quantity_changed", self, "_get_water")
+	assert(nuggets.connect("quantity_changed", self, "_get_nugget") == 0)
+	assert(nuggets.connect('quantity_emptied', self, "_game_over") == 0)
+	assert(cows.connect("quantity_changed", self, "_get_cow") == 0)
+	assert(water.connect("quantity_changed", self, "_get_water") == 0)
 
 func _physics_process(delta) -> void:
 	_move_state(delta)

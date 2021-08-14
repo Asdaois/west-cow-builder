@@ -1,7 +1,7 @@
 extends Node2D
 
 func _ready() -> void:
-	GameSignals.connect("instanciate_item_in_world", self, "_on_instantiate_item_in_world")
+	assert(GameSignals.connect("instanciate_item_in_world", self, "_on_instantiate_item_in_world") == 0)
 
 
 func _on_instantiate_item_in_world(Item, _position: Vector2):

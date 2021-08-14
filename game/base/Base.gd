@@ -16,10 +16,6 @@ var _delivery = false
 # on ready variables
 onready var label := $Label
 
-# built-in functions
-
-func _init() -> void:
-	pass
 
 func _input(_event):
 	if(_delivery):
@@ -30,11 +26,6 @@ func _input(_event):
 				yield(get_tree().create_timer(0.2), "timeout")
 				_instantiate_nugget()
 				
-
-func _ready() -> void:
-	pass
-
-# public - private functions
 
 func _instantiate_nugget():
 	GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)

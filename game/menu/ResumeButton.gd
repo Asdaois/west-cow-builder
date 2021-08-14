@@ -11,8 +11,8 @@ extends Button
 
 # on ready variables
 func _ready() -> void:
-	connect('button_down', self, '_on_button_down')
-	GameStateManager.connect('game_over', self, '_disabled')
+	assert(connect('button_down', self, '_on_button_down') == 0)
+	assert(GameStateManager.connect('game_over', self, '_disabled') == 0)
 
 # built-in functions
 

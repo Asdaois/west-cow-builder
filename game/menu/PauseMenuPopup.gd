@@ -2,9 +2,9 @@
 extends Popup
 
 func _ready() -> void:
-	GameStateManager.connect('game_is_paused',self, "_show_menu")
-	GameStateManager.connect('resume_game', self, "_hide_menu")
-	GameStateManager.connect('game_over', self, "_show_menu")
+	assert(GameStateManager.connect('game_is_paused',self, "_show_menu") == 0)
+	assert(GameStateManager.connect('resume_game', self, "_hide_menu") == 0)
+	assert(GameStateManager.connect('game_over', self, "_show_menu") == 0)
 	hide()
 	pass
 

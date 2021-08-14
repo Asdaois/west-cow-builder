@@ -19,7 +19,7 @@ func _init() -> void:
 
 
 func _ready() -> void:
-	connect('button_down', self, '_on_button_down')
+	assert(connect('button_down', self, '_on_button_down') == 0)
 
 
 # public - private functions

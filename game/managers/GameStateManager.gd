@@ -4,7 +4,6 @@ extends Node
 # custom signals
 signal start_game
 signal resume_game
-signal player_died
 signal game_is_paused
 signal game_over
 # enums - constant
@@ -43,7 +42,7 @@ func resume_game():
 
 
 func new_game():
-	get_tree().reload_current_scene()
+	assert(get_tree().reload_current_scene() == 0)
 	get_tree().paused = false
 	emit_signal('start_game')
 	current_state = GameState.PLAYING
