@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://npc/NPC.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 14.9293 )
+
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/VillageMan.png-91dbe2eb93c9df2552dc4cbced7a8f0b.stex"
+
+[node name="NPC" type="KinematicBody2D"]
+z_index = -1
+collision_layer = 64
+collision_mask = 8
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = SubResource( 1 )
+hframes = 4
+vframes = 4
