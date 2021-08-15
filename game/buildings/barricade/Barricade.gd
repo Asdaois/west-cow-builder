@@ -7,6 +7,8 @@ extends StaticBody2D
 
 # exports variables
 export var BUILDING_TIME = 10
+export var BUILDING_COST = 1
+export(Resource) var nuggets = nuggets as ItemResource
 
 # public - private variables
 var _buildable = false
@@ -45,8 +47,12 @@ func _stop_input_timer():
 # signals handlers
 func _on_Area2D_body_entered(body):
 	if body is Player and _built == false:
-		label.text = "Presiona v para\nconstruir una\nbarricada"
-		_buildable = true
+		if nuggets.quantity > 1:
+			label.text = "Presiona v para\nconstruir una\nbarricada"
+			_buildable = true
+		else:
+			label.text = "No tienes oro \nsuficiente"
+			_buildable = false
 
 func _on_Area2D_body_exited(body):
 	if body is Player and _built == false:
@@ -56,6 +62,7 @@ func _on_Area2D_body_exited(body):
 func _on_StartBulding_timeout():
 	label.text = ""
 	_building = true
+	nuggets.quantity -= BUILDING_COST
 	building_time.start(BUILDING_TIME)
 
 func _on_BuildingTime_timeout():
