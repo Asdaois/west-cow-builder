@@ -101,12 +101,13 @@ func _accelerate_towards_point(point, delta):
 	sprite.flip_h = velocity.x < 0
 
 
-func _disable_picking():
+func disable_picking():
+	print("disable")
 	label.text = ""
 	_pickable = false
 
 
-func _enable_picking():
+func enable_picking():
 	label.text = "presiona v para \nrecoger la vaca"
 	_pickable = true
 # signals handlers
@@ -114,22 +115,14 @@ func _enable_picking():
 
 func _on_PickupTimer_timeout():
 	cow.quantity += 1
+	GameSignals.emit_signal("cow_exited_player_range")
 	queue_free()
 
 func _on_PlayerDetectionArea_body_entered(body: Node) -> void:
 	if body is Player:
-		if body.current_target == null:
-			body.current_target = self
-			_enable_picking()
-			
-		if body.current_target.is_in_group("broken_cart"):
-			return
+		GameSignals.emit_signal("cow_exited_player_range")
 		
-		# if body.current_target.is_in_group("cow"):
-			# body.current_target._disable_picking()
-
 func _on_PlayerDetectionArea_body_exited(body):
 	if body is Player:
-		if body.current_target == self :
-			_disable_picking()
-			body.current_target = null
+		GameSignals.emit_signal("cow_exited_player_range")
+		disable_picking()

@@ -83,7 +83,7 @@ func _do_action() -> void:
 			_do_wander()
 
 func _get_target_direction() -> void:
-	if not target:
+	if not is_instance_valid(target):
 		return
 		
 	velocity.x = 0

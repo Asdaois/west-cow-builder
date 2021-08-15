@@ -36,10 +36,16 @@ zoom = Vector2( 0.3, 0.3 )
 [node name="ItemCreator" parent="." instance=ExtResource( 7 )]
 
 [node name="Cow" parent="." instance=ExtResource( 3 )]
-position = Vector2( 396.959, 63.4776 )
+position = Vector2( 180.79, -84.3812 )
+
+[node name="Cow5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 339.54, -56.6629 )
+
+[node name="Cow6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 218.587, -102.02 )
 
 [node name="Cow2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 69.9271, 71.802 )
+position = Vector2( 64.8874, 71.802 )
 
 [node name="Cow3" parent="." instance=ExtResource( 3 )]
 position = Vector2( 518.258, 27.8014 )

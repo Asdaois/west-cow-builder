@@ -13,7 +13,7 @@ export(int) var wander_range = 16
 # on ready variables
 onready var start_position = global_position
 onready var target_position = global_position
-onready var timer = $Timer
+onready var timer: Timer = $Timer
 
 # built-in functions
 func _ready():

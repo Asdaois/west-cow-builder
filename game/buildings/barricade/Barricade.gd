@@ -21,7 +21,7 @@ onready var sprite = $Sprite
 
 # built-in functions
 
-func _process(delta):
+func _process(_delta):
 	if start_building.time_left > 0:
 		label.text = "Start building in: " + str(int(start_building.time_left)) + "s"
 	if building_time.time_left > 0:
