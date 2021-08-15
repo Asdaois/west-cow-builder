@@ -52,6 +52,7 @@ config/icon="res://icon.png"
 
 GameStateManager="*res://managers/GameStateManager.gd"
 GameSignals="*res://managers/GameSignals.gd"
+Enums="*res://Enums.gd"
 
 [display]
 
@@ -102,7 +103,11 @@ drop_nugget={
 2d_physics/layer_4="Floor"
 2d_physics/layer_5="Cow"
 2d_physics/layer_6="Broken Cart"
+<<<<<<< HEAD
+2d_physics/layer_7="NPC"
+=======
 2d_physics/layer_7="Barricade"
+>>>>>>> d27934b9324d407714443d32e78d00ea85d7d720
 
 [physics]
 
