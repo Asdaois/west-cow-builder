@@ -31,6 +31,7 @@ onready var sprite := $Sprite
 func _ready():
 	randomize()
 	_state = _pick_random_state([IDLE, WANDER])
+	assert(GameSignals.connect("cow_is_picked",self, "_check_is_picked") == 0)
 
 
 func _process(_delta):
@@ -66,6 +67,13 @@ func _physics_process(delta):
 
 
 # public - private functions
+func _check_is_picked(body):
+	print(body == self)
+	if body != self:
+		disable_picking()
+	elif body == self:
+		enable_picking()
+
 func _add_gravity(delta) -> void:
 	if !is_on_floor():
 		velocity.y += delta * GRAVITY
@@ -102,7 +110,6 @@ func _accelerate_towards_point(point, delta):
 
 
 func disable_picking():
-	print("disable")
 	label.text = ""
 	_pickable = false
 
@@ -110,7 +117,6 @@ func disable_picking():
 func enable_picking():
 	label.text = "presiona v para \nrecoger la vaca"
 	_pickable = true
-# signals handlers
 
 
 func _on_PickupTimer_timeout():

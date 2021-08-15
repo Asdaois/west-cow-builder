@@ -41,19 +41,14 @@ func _set_current_target(new_value : Node):
 		
 	if current_target == null:
 		current_target = new_value
-		return
 	
 	if current_target.is_in_group("broken_cart"):
 		return
 	
 	if new_value.is_in_group("broken_cart"):
-		if current_target.is_in_group("cow"):
-			current_target.disable_picking()
 		current_target = new_value
-
-
 	current_target = new_value
-
+	GameSignals.emit_signal("cow_is_picked", new_value)
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -151,20 +146,18 @@ func _game_over():
 
 func _search_new_cow():
 	var bodies = player_area.get_overlapping_bodies()
-	
 	var closer_cows := []
 	var distance_to_cows := []
 	
 	for body in bodies:
 		if (body as Node).is_in_group("cow"):
-			body.disable_picking()
-			body.disable_picking()
+			
 			closer_cows.append(body)
 			distance_to_cows.append(global_position.distance_squared_to(body.global_position))
 	var closer_cow_distance = distance_to_cows.min()
 	for cow in closer_cows:
 		if global_position.distance_squared_to(cow.global_position) == closer_cow_distance:
-			current_target = cow
-			cow.enable_picking()
+			self.current_target = cow
+			
 	pass
 
