@@ -16,7 +16,6 @@ var _delivery = false
 # on ready variables
 onready var label := $Label
 
-
 func _input(_event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):
@@ -31,8 +30,6 @@ func _instantiate_nugget():
 	GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
 
 # signals handlers
-
-
 func _on_DetectionArea_area_entered(area):
 	if area.name == "PlayerArea":
 		if(cows.quantity > 0):

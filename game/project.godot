@@ -104,6 +104,7 @@ drop_nugget={
 2d_physics/layer_5="Cow"
 2d_physics/layer_6="Broken Cart"
 2d_physics/layer_7="NPC"
+2d_physics/layer_8="Barricade"
 <<<<<<<HEAD2d_physics/layer_7="NPC"
 
 [physics]
