@@ -41,9 +41,10 @@ func _set_current_target(new_value : Node):
 		
 	if current_target == null:
 		current_target = new_value
-	
-	if current_target.is_in_group("broken_cart"):
-		return
+		
+	if is_instance_valid(current_target):
+		if current_target.is_in_group("broken_cart"):
+			return
 	
 	if new_value.is_in_group("broken_cart"):
 		current_target = new_value
