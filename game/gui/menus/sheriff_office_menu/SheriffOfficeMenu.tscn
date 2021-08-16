@@ -5,7 +5,7 @@
 [ext_resource path="res://gui/menus/sheriff_office_menu/sprites/shitrifle.png" type="Texture" id=3]
 [ext_resource path="res://gui/menus/sheriff_office_menu/sprites/goodrifle.png" type="Texture" id=4]
 
-[node name="Sheriff_Office_Menu" type="MarginContainer"]
+[node name="SheriffOfficeMenu" type="MarginContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 50
