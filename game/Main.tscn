@@ -15,9 +15,6 @@ script = ExtResource( 6 )
 
 [node name="Farming_ranch" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1150, 58 )
-LEVEL = 1
-FARMERS = 0
-COWS = 0
 
 [node name="FloorGenerator" parent="." instance=ExtResource( 2 )]
 position = Vector2( 34.75, 130.75 )

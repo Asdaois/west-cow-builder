@@ -1,0 +1,181 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://gui/menus/sheriff_office_menu/sprites/shitrevolver.png" type="Texture" id=1]
+[ext_resource path="res://gui/menus/sheriff_office_menu/sprites/goodrevolver.png" type="Texture" id=2]
+[ext_resource path="res://gui/menus/sheriff_office_menu/sprites/shitrifle.png" type="Texture" id=3]
+[ext_resource path="res://gui/menus/sheriff_office_menu/sprites/goodrifle.png" type="Texture" id=4]
+
+[node name="Sheriff_Office_Menu" type="MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = 376.0
+margin_top = 185.0
+margin_right = 647.0
+margin_bottom = 415.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 264.0
+margin_bottom = 223.0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_right = 257.0
+margin_bottom = 14.0
+text = "Upgrade Your Weapons!"
+align = 1
+
+[node name="Weapons_Menu" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 257.0
+margin_bottom = 216.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 250.0
+margin_bottom = 191.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2"]
+margin_right = 243.0
+margin_bottom = 74.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer"]
+margin_left = 6.0
+margin_right = 102.0
+margin_bottom = 74.0
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_left = 24.0
+margin_right = 72.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 1, 1 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 96.0
+margin_bottom = 50.0
+text = "Shitty Gun : 5N"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_left = 30.0
+margin_top = 54.0
+margin_right = 66.0
+margin_bottom = 74.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Buy"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer"]
+margin_left = 106.0
+margin_right = 237.0
+margin_bottom = 74.0
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer2"]
+margin_left = 41.0
+margin_right = 89.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 1, 1 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 2 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer2"]
+margin_top = 36.0
+margin_right = 131.0
+margin_bottom = 50.0
+text = "Awesome Gun : 15N"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer/VBoxContainer2"]
+margin_left = 47.0
+margin_top = 54.0
+margin_right = 83.0
+margin_bottom = 74.0
+size_flags_horizontal = 4
+text = "Buy"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2"]
+margin_top = 78.0
+margin_right = 243.0
+margin_bottom = 184.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2"]
+margin_right = 106.0
+margin_bottom = 106.0
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_left = 21.0
+margin_right = 85.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 1, 1 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 3 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_top = 68.0
+margin_right = 106.0
+margin_bottom = 82.0
+text = "Shitty Rifle : 20N"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_left = 35.0
+margin_top = 86.0
+margin_right = 71.0
+margin_bottom = 106.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Buy"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2"]
+margin_left = 110.0
+margin_right = 243.0
+margin_bottom = 106.0
+
+[node name="Icon" type="TextureRect" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer2"]
+margin_left = 34.0
+margin_right = 98.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 1, 1 )
+size_flags_horizontal = 4
+size_flags_vertical = 2
+texture = ExtResource( 4 )
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer2"]
+margin_top = 68.0
+margin_right = 133.0
+margin_bottom = 82.0
+text = "Awesome Rifle : 30N"
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/Weapons_Menu/VBoxContainer2/HBoxContainer2/VBoxContainer2"]
+margin_left = 48.0
+margin_top = 86.0
+margin_right = 84.0
+margin_bottom = 106.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Buy"
