@@ -16,3 +16,17 @@ func _on_BrokenCart_body_exited(body: Node):
 	if body is Player:
 		body.current_target = null
 
+
+func _ready() -> void:
+	_instance_npc()
+
+
+func _on_Timer_timeout() -> void:
+	if $NpcContainer.get_children().size() < 2:
+		_instance_npc()
+
+func _instance_npc() -> void:
+	var npc : NPC = npc_scene.instance()
+	npc.global_position = global_position
+	npc.broken_cart = self
+	$NpcContainer.add_child(npc)
