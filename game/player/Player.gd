@@ -78,7 +78,8 @@ func _physics_process(delta) -> void:
 func _input(event):
 	if event.is_action_pressed("drop_nugget"):
 		if nuggets.quantity == 1:
-			print_debug("One GOLD to the poor")
+			if Globals.DEBUG:
+				print_debug("One GOLD to the poor")
 		elif nuggets.quantity > 0:
 			nuggets.quantity -= 1
 			_instantiate_nugget()

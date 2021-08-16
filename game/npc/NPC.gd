@@ -1,10 +1,12 @@
 extends KinematicBody2D
 class_name NPC
 
-export(Enums.NPC_WORKS) var current_work
+signal work_changed
+
+export(Enums.NPC_WORKS) var current_work setget change_work
 export(float) var speed := 40.0
-export(Resource) var nuggets = nuggets as ItemResource
 export(NodePath) onready var wander_timer = get_node(wander_timer) as Timer
+
 var velocity := Vector2.ZERO
 var nugget: Node
 var nugget_picked: Node
@@ -16,10 +18,10 @@ func _ready() -> void:
 		if is_a_parent_of(state):
 			if "npc" in state:
 				state.npc = self
-			print(state)
+	$StateMachine.start_machine()
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	_add_gravity()
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -31,7 +33,7 @@ func _on_NuggetDetector_body_entered(body: Node) -> void:
 	nugget = body
 
 
-func _on_NuggetDetector_body_exited(body: Node) -> void:
+func _on_NuggetDetector_body_exited(_body: Node) -> void:
 	nugget = null
 
 func _get_target_direction(target) -> void:
@@ -50,11 +52,18 @@ func _on_NuggetPicker_body_entered(body: Node) -> void:
 func wait_for_new_state() -> void:
 	velocity = Vector2.ZERO
 
-func _on_WanderArea_exited(area: Area2D) -> void:
+func _on_WanderArea_exited(_area: Area2D) -> void:
 	is_outside_wander_area = true
 
 func apply_speed(factor: float) -> void:
 	velocity.x = velocity.x * factor * speed
 
-func _brokencart_area_entered(area: Area2D) -> void:
+func _brokencart_area_entered(_area: Area2D) -> void:
 	is_outside_wander_area = false
+
+func change_work(new_value):
+	current_work = new_value
+	emit_signal("work_changed")
+	
+func _on_OptionButton_item_selected(index: int) -> void:
+	change_work(index)

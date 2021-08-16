@@ -142,7 +142,8 @@ func _check_overlapping_boddies() -> void:
 				target = body
 			
 			if body is Player:
-				print_debug("follow player")
+				if Globals.DEBUG:
+					print_debug("follow player")
 				_change_state(EnemyState.FOLLOW_PLAYER)
 				target = body
 

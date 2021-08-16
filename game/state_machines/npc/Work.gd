@@ -1,12 +1,18 @@
-extends Node
+extends StateMachine
 
 var state_machine: StateMachine
-var npc: KinematicBody2D
+var npc: NPC
 
 func enter():
-	exit("GoBase")
+	assert(npc.connect("work_changed", self, "_go_town_to_get_newjob") == 0)
+	choose_work()
+	start_machine()
+	pass
+
 
 func exit(next_state):
+	npc.disconnect("work_changed", self, "_go_town_to_get_newjob")
+	stop_machine()
 	if Globals.DEBUG:
 		print("Exiting state: ", name)
 	state_machine.change_to(next_state)
@@ -30,3 +36,26 @@ func unhandled_key_input(event):
 
 func notification(what, flag = false):
 	return [what, flag]
+
+
+func choose_work():
+	match npc.current_work:
+		Enums.NPC_WORKS.Builder:
+			state = $Builder
+			pass
+		Enums.NPC_WORKS.Defender:
+			state = $Defender
+			pass
+		Enums.NPC_WORKS.Farmer:
+			state = $Farmer
+			pass
+		Enums.NPC_WORKS.Jobless:
+			state = $Jobless
+			pass
+		Enums.NPC_WORKS.Miner:
+			state = $Miner
+			pass
+
+
+func _go_town_to_get_newjob():
+	exit("GoBase")

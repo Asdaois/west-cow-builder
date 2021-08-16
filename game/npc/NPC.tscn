@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://npc/NPC.gd" type="Script" id=1]
 [ext_resource path="res://state_machines/StateMachine.gd" type="Script" id=2]
@@ -8,20 +8,25 @@
 [ext_resource path="res://state_machines/npc/GoBase.gd" type="Script" id=6]
 [ext_resource path="res://state_machines/npc/Work.gd" type="Script" id=7]
 [ext_resource path="res://state_machines/npc/Unaffiliated.gd" type="Script" id=8]
+[ext_resource path="res://state_machines/npc/work/Jobless.gd" type="Script" id=9]
+[ext_resource path="res://state_machines/npc/work/Builder.gd" type="Script" id=10]
+[ext_resource path="res://state_machines/npc/work/Defender.gd" type="Script" id=11]
+[ext_resource path="res://state_machines/npc/work/Miner.gd" type="Script" id=12]
+[ext_resource path="res://state_machines/npc/work/Farmer.gd" type="Script" id=13]
 
-[sub_resource type="StreamTexture" id=5]
+[sub_resource type="StreamTexture" id=1]
 load_path = "res://.import/VillageMan.png-91dbe2eb93c9df2552dc4cbced7a8f0b.stex"
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 14.9293 )
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=3]
 radius = 15.1969
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 80, 20 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 150, 10 )
 
 [node name="NPC" type="KinematicBody2D" groups=[
@@ -32,22 +37,31 @@ collision_layer = 64
 collision_mask = 8
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_lock_": true
 }
+current_work = 1
 wander_timer = NodePath("WanderTimer")
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = SubResource( 5 )
-hframes = 4
-vframes = 4
-
-[node name="WanderTimer" type="Timer" parent="."]
-wait_time = 0.3
-one_shot = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Control" type="Control" parent="."]
 visible = false
-shape = SubResource( 2 )
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionButton" type="OptionButton" parent="Control"]
+margin_left = -30.0
+margin_top = -100.0
+margin_right = 44.0
+margin_bottom = -80.0
+text = "Jobless"
+items = [ "Jobless", null, false, 0, null, "Miner", null, false, 1, null, "Defender", null, false, 2, null, "Farmer", null, false, 3, null, "Builder", null, false, 4, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -82,6 +96,44 @@ script = ExtResource( 6 )
 ]]
 script = ExtResource( 7 )
 
+[node name="Jobless" type="Node" parent="StateMachine/Work" groups=[
+"state_machine",
+]]
+script = ExtResource( 9 )
+
+[node name="Miner" type="Node" parent="StateMachine/Work" groups=[
+"state_machine",
+]]
+script = ExtResource( 12 )
+
+[node name="Defender" type="Node" parent="StateMachine/Work" groups=[
+"state_machine",
+]]
+script = ExtResource( 11 )
+
+[node name="Farmer" type="Node" parent="StateMachine/Work" groups=[
+"state_machine",
+]]
+script = ExtResource( 13 )
+
+[node name="Builder" type="Node" parent="StateMachine/Work" groups=[
+"state_machine",
+]]
+script = ExtResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = SubResource( 1 )
+hframes = 4
+vframes = 4
+
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 2 )
+
 [node name="Areas" type="Node2D" parent="."]
 
 [node name="NuggetPicker" type="Area2D" parent="Areas"]
@@ -90,7 +142,7 @@ collision_layer = 0
 collision_mask = 34
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/NuggetPicker"]
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 
 [node name="NuggetDetector" type="Area2D" parent="Areas"]
 visible = false
@@ -99,15 +151,16 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/NuggetDetector"]
 position = Vector2( 0, -8 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="WanderArea" type="Area2D" parent="Areas"]
 collision_layer = 0
 collision_mask = 32
 
 [node name="Collision" type="CollisionShape2D" parent="Areas/WanderArea"]
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 
+[connection signal="item_selected" from="Control/OptionButton" to="." method="_on_OptionButton_item_selected"]
 [connection signal="area_entered" from="Areas/NuggetPicker" to="." method="_brokencart_area_entered"]
 [connection signal="body_entered" from="Areas/NuggetPicker" to="." method="_on_NuggetPicker_body_entered"]
 [connection signal="body_entered" from="Areas/NuggetDetector" to="." method="_on_NuggetDetector_body_entered"]

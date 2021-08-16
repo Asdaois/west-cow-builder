@@ -1,8 +1,8 @@
 extends Node
 
 enum NPC_WORKS {
-	Traveler = 0, 
-	Unemployed = 1, 
+	Miner = 0, 
+	Jobless = 1, 
 	Builder = 2, 
 	Farmer = 3, 
 	Defender = 4

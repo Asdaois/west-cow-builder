@@ -6,10 +6,17 @@ var state: Object
 
 var history = []
 
-func _ready():
-	# Set the initial state to the first child node
+func _ready() -> void:
 	state = get_child(0)
+	_disabled_node()
+
+func start_machine():
+	# Set the initial state to the first child node
+	_enabled_node()
 	call_deferred("_enter_state")
+
+func stop_machine():
+	_disabled_node()
 
 func change_to(new_state):
 	history.append(state.name)
@@ -53,3 +60,20 @@ func _unhandled_key_input(event):
 func _notification(what):
 	if state && state.has_method("notification"):
 		state.notification(what)
+
+func _disabled_node():
+	set_process(false)
+	set_physics_process(false)
+	set_process_input(false) 
+	set_process_unhandled_key_input(false)
+	set_process_unhandled_input(false)
+	set_block_signals(true)
+
+
+func _enabled_node():
+	set_process(true)
+	set_physics_process(true)
+	set_process_input(true) 
+	set_process_unhandled_key_input(true)
+	set_process_unhandled_input(true)
+	set_block_signals(false)

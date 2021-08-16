@@ -16,6 +16,9 @@ var _delivery = false
 # on ready variables
 onready var label := $Label
 
+func _ready() -> void:
+	Globals.town_hall = self
+
 func _input(_event):
 	if(_delivery):
 		if(Input.get_action_strength("ui_down")):

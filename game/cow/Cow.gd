@@ -68,7 +68,6 @@ func _physics_process(delta):
 
 # public - private functions
 func _check_is_picked(body):
-	print(body == self)
 	if body != self:
 		disable_picking()
 	elif body == self:

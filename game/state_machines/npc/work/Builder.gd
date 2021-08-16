@@ -1,15 +1,13 @@
-extends StateMachine
+extends Node
 
 var state_machine: StateMachine
-var npc: NPC
 
 func enter():
-	start_machine()
+	if Globals.DEBUG:
+		print("I'm a Builder")
 	pass
 
 func exit(next_state):
-	stop_machine()
-	# Stop the process
 	if Globals.DEBUG:
 		print("Exiting state: ", name)
 	state_machine.change_to(next_state)
@@ -20,11 +18,6 @@ func process(delta):
 	return delta
 
 func physics_process(delta):
-	if is_instance_valid(npc.nugget_picked):
-		npc.wait_for_new_state()
-		# Getting affilitation to player
-		npc.nugget_picked.queue_free()
-		exit("GoBase")
 	return delta
 
 func input(event):
@@ -38,4 +31,3 @@ func unhandled_key_input(event):
 
 func notification(what, flag = false):
 	return [what, flag]
-

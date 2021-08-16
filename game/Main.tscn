@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://item-creator/ItemCreator.tscn" type="PackedScene" id=7]
 [ext_resource path="res://buildings/barricade/Barricade.tscn" type="PackedScene" id=8]
 [ext_resource path="res://buildings/farming_ranch/Farming_ranch.tscn" type="PackedScene" id=9]
+[ext_resource path="res://broken-cart/BrokenCart.tscn" type="PackedScene" id=10]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 6 )
@@ -55,5 +56,8 @@ position = Vector2( 518.258, 27.8014 )
 
 [node name="Cow4" parent="." instance=ExtResource( 3 )]
 position = Vector2( 282.795, -29.2806 )
+
+[node name="BrokenCart" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1745.75, 70.0493 )
 
 [editable path="Player"]
