@@ -19,6 +19,8 @@ func stop_machine():
 	_disabled_node()
 
 func change_to(new_state):
+	if state.has_method("stop_machine"):
+		state.stop_machine()
 	history.append(state.name)
 	state = get_node(new_state)
 	_enter_state()
@@ -33,6 +35,8 @@ func _enter_state():
 		print("Entering state: ", state.name)
 	# Give the new state a reference to this state machine script
 	state.state_machine = self
+	if state.has_method("start_machine"):
+		state.start_machine()
 	state.enter()
 
 # Route Game Loop function calls to

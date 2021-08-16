@@ -6,20 +6,17 @@ var npc: NPC
 func enter():
 	assert(npc.connect("work_changed", self, "_go_town_to_get_newjob") == 0)
 	choose_work()
-	start_machine()
 	pass
 
 
 func exit(next_state):
 	npc.disconnect("work_changed", self, "_go_town_to_get_newjob")
-	stop_machine()
 	if Globals.DEBUG:
 		print("Exiting state: ", name)
 	state_machine.change_to(next_state)
 
 # Optional handler functions for game loop events
 func process(delta):
-	# Add handler code here
 	return delta
 
 func physics_process(delta):

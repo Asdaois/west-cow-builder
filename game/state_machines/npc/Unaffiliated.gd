@@ -4,11 +4,9 @@ var state_machine: StateMachine
 var npc: NPC
 
 func enter():
-	start_machine()
 	pass
 
 func exit(next_state):
-	stop_machine()
 	# Stop the process
 	if Globals.DEBUG:
 		print("Exiting state: ", name)
@@ -16,7 +14,6 @@ func exit(next_state):
 
 # Optional handler functions for game loop events
 func process(delta):
-	# Add handler code here
 	return delta
 
 func physics_process(delta):

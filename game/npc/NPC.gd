@@ -3,9 +3,13 @@ class_name NPC
 
 signal work_changed
 
-export(Enums.NPC_WORKS) var current_work setget change_work
 export(float) var speed := 40.0
 export(NodePath) onready var wander_timer = get_node(wander_timer) as Timer
+export(Enums.NPC_WORKS) var current_work setget change_work
+
+func change_work(new_value):
+	current_work = new_value
+	emit_signal("work_changed")
 
 var velocity := Vector2.ZERO
 var nugget: Node
@@ -61,9 +65,4 @@ func apply_speed(factor: float) -> void:
 func _brokencart_area_entered(_area: Area2D) -> void:
 	is_outside_wander_area = false
 
-func change_work(new_value):
-	current_work = new_value
-	emit_signal("work_changed")
-	
-func _on_OptionButton_item_selected(index: int) -> void:
-	change_work(index)
+
