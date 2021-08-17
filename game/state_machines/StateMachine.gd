@@ -81,3 +81,11 @@ func _enabled_node():
 	set_process_unhandled_key_input(true)
 	set_process_unhandled_input(true)
 	set_block_signals(false)
+
+# Virtual functions
+
+func enter():
+	pass
+
+func exit(next_state):
+	pass
