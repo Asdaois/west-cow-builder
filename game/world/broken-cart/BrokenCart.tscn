@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://world/broken-cart/BrokenCart.gd" type="Script" id=1]
+[ext_resource path="res://npc/NPC/NPC.tscn" type="PackedScene" id=2]
+[ext_resource path="res://world/broken-cart/cart.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 34.5, 26 )
+
+[node name="BrokenCart" type="Area2D" groups=[
+"broken_cart",
+]]
+z_index = -2
+collision_layer = 32
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+npc_scene = ExtResource( 2 )
+
+[node name="NpcContainer" type="Node" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -2.5, -8.5 )
+texture = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 80.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_BrokenCart_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_BrokenCart_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
