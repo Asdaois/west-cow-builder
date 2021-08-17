@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://npc/NPC.gd"
 }, {
+"base": "Resource",
+"class": "NpcWeapons",
+"language": "GDScript",
+"path": "res://custom_resources/NPCWeapons.gd"
+}, {
 "base": "RigidBody2D",
 "class": "Nugget",
 "language": "GDScript",
@@ -49,6 +54,7 @@ _global_script_class_icons={
 "Enemy": "",
 "ItemResource": "",
 "NPC": "",
+"NpcWeapons": "",
 "Nugget": "",
 "Player": "",
 "StateMachine": ""
