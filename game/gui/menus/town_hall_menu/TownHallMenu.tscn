@@ -13,7 +13,7 @@ anchor_bottom = 0.5
 margin_left = -157.0
 margin_top = -145.0
 margin_right = 157.0
-margin_bottom = 145.0
+margin_bottom = 152.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -22,20 +22,36 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 307.0
-margin_bottom = 283.0
+margin_bottom = 290.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 300.0
-margin_bottom = 14.0
+margin_bottom = 20.0
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 76.0
+margin_top = 3.0
+margin_right = 200.0
+margin_bottom = 17.0
 text = "Upgrade your town!"
 align = 1
 
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 204.0
+margin_right = 224.0
+margin_bottom = 20.0
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "X"
+align = 2
+
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
-margin_top = 18.0
+margin_top = 24.0
 margin_right = 300.0
-margin_bottom = 276.0
+margin_bottom = 283.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 tab_align = 0
