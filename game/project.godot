@@ -9,35 +9,40 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "Citizen",
+"language": "GDScript",
+"path": "res://scripts/custom_resources/Citizen.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Cow",
 "language": "GDScript",
-"path": "res://cow/Cow.gd"
+"path": "res://npc/cow/Cow.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
-"path": "res://enemy/Enemy.gd"
+"path": "res://npc/enemy/Enemy.gd"
 }, {
 "base": "Resource",
 "class": "ItemResource",
 "language": "GDScript",
-"path": "res://custom_resources/Item.gd"
+"path": "res://scripts/custom_resources/Item.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "NPC",
 "language": "GDScript",
-"path": "res://npc/NPC.gd"
+"path": "res://npc/NPC/NPC.gd"
 }, {
 "base": "Resource",
 "class": "NpcWeapons",
 "language": "GDScript",
-"path": "res://custom_resources/NPCWeapons.gd"
+"path": "res://scripts/custom_resources/NPCWeapons.gd"
 }, {
 "base": "RigidBody2D",
 "class": "Nugget",
 "language": "GDScript",
-"path": "res://nugget/Nugget.gd"
+"path": "res://world/nugget/Nugget.gd"
 }, {
 "base": "KinematicBody2D",
 "class": "Player",
@@ -47,9 +52,10 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
-"path": "res://state_machines/StateMachine.gd"
+"path": "res://scripts/state_machines/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Citizen": "",
 "Cow": "",
 "Enemy": "",
 "ItemResource": "",
@@ -68,11 +74,11 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GameStateManager="*res://managers/GameStateManager.gd"
-GameSignals="*res://managers/GameSignals.gd"
+GameStateManager="*res://scripts/managers/GameStateManager.gd"
+GameSignals="*res://scripts/managers/GameSignals.gd"
 Enums="*res://Enums.gd"
 Globals="*res://Globals.gd"
-GameUtils="*res://managers/GameUtils.gd"
+GameUtils="*res://scripts/managers/GameUtils.gd"
 
 [display]
 

@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://floor-generator/FloorGenerator.tscn" type="PackedScene" id=1]
-[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=2]
-[ext_resource path="res://item-creator/ItemCreator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://npc/enemy/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://utils/item-creator/ItemCreator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/test_stats/NuggetsInfinity.tres" type="Resource" id=5]
-[ext_resource path="res://menu/Menu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://gui/menus/menu/Menu.tscn" type="PackedScene" id=6]
 
 [node name="TEST_EnemyWander" type="Node2D"]
 position = Vector2( -718.729, 68.4277 )

@@ -152,8 +152,7 @@ func _search_new_cow():
 	var distance_to_cows := []
 	
 	for body in bodies:
-		if (body as Node).is_in_group("cow"):
-			
+		if body.is_in_group("cow"):
 			closer_cows.append(body)
 			distance_to_cows.append(global_position.distance_squared_to(body.global_position))
 	var closer_cow_distance = distance_to_cows.min()
