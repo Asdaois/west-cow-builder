@@ -56,7 +56,8 @@ onready var animationPlayer := $AnimationPlayer
 onready var label := $Label
 onready var label2 := $Label2
 onready var label3 := $Label3
-onready var running_timer := $RunningTimer
+onready var running_timer_left := $RunningTimerLeft
+onready var running_timer_right := $RunningTimerRight
 
 # built-in functions
 func _ready() -> void:
@@ -84,12 +85,21 @@ func _input(event):
 			nuggets.quantity -= 1
 			_instantiate_nugget()
 	
-	if event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right"):
+	if event.is_action_pressed("ui_left"):
 		if state != TIRED:
 			state = WALK
-			if(event.is_echo() != true and running_timer.time_left > 0):
+			if(event.is_echo() != true and running_timer_left.time_left > 0):
 				state = RUN
-			running_timer.start(0.5)
+			running_timer_right.stop()
+			running_timer_left.start(0.5)
+	
+	if  event.is_action_pressed("ui_right"):
+		if state != TIRED:
+			state = WALK
+			if(event.is_echo() != true and running_timer_right.time_left > 0):
+				state = RUN
+			running_timer_left.stop()
+			running_timer_right.start(0.5)
 
 func _process(_delta):
 	if(water.quantity == 0):
