@@ -8,7 +8,6 @@ var history = []
 
 func _ready() -> void:
 	if auto_start:
-		
 		start_machine()
 	else:
 		_disabled_node()

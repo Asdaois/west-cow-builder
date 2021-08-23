@@ -4,7 +4,7 @@ var state_machine: StateMachine
 
 func enter():
 	if Globals.DEBUG:
-		print("I'm goind to defende you baby")
+		print("I'm goind to defend you baby")
 	pass
 
 func exit(next_state):
