@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://world/buildings/barricade/Barricade.tscn" type="PackedScene" id=8]
 [ext_resource path="res://world/buildings/farming_ranch/Farming_ranch.tscn" type="PackedScene" id=9]
 [ext_resource path="res://world/broken-cart/BrokenCart.tscn" type="PackedScene" id=10]
+[ext_resource path="res://world/buildings/well/Well.tscn" type="PackedScene" id=11]
+[ext_resource path="res://world/buildings/stable/Stable.tscn" type="PackedScene" id=12]
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 6 )
@@ -65,5 +67,11 @@ position = Vector2( 282.795, -29.2806 )
 
 [node name="BrokenCart" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1745.75, 70.0493 )
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 11 )]
+position = Vector2( 2041, 81 )
+
+[node name="Stable" parent="." instance=ExtResource( 12 )]
+position = Vector2( 2157, 76 )
 
 [editable path="Player"]

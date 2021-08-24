@@ -139,5 +139,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RunningTimer" type="Timer" parent="."]
+[node name="RunningTimerRight" type="Timer" parent="."]
+one_shot = true
+
+[node name="RunningTimerLeft" type="Timer" parent="."]
 one_shot = true
