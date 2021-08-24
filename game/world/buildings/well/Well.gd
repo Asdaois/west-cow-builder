@@ -41,7 +41,7 @@ func _on_Area2D_body_entered(body):
 func _on_Area2D_body_exited(body):
 	if body.is_in_group("player"):
 		label.text = ""
-		_drinkable = true
+		_drinkable = false
 
 
 func _on_Timer_timeout():

@@ -10,7 +10,7 @@ extents = Vector2( 8, 6 )
 [sub_resource type="CircleShape2D" id=2]
 radius = 23.0217
 
-[node name="StaticBody2D" type="StaticBody2D"]
+[node name="Well" type="StaticBody2D"]
 collision_layer = 0
 collision_mask = 8
 script = ExtResource( 2 )
