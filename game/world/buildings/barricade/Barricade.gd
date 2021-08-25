@@ -1,6 +1,4 @@
-# class_name
 extends StaticBody2D
-
 # custom signals
 
 # enums - constant
@@ -70,5 +68,5 @@ func _on_BuildingTime_timeout():
 	_building = false
 	_buildable = false
 	sprite.frame = 1
-	self.set_collision_layer_bit(6, true)
+	$CollisionShape2D.set_deferred("disabled", false)
 	label.text = ""

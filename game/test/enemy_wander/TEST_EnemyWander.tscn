@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://test/floor-generator/FloorGenerator.tscn" type="PackedScene" id=1]
 [ext_resource path="res://npc/enemy/Enemy.tscn" type="PackedScene" id=2]
@@ -6,9 +6,14 @@
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://data/test_stats/NuggetsInfinity.tres" type="Resource" id=5]
 [ext_resource path="res://gui/menus/menu/Menu.tscn" type="PackedScene" id=6]
+[ext_resource path="res://world/buildings/barricade/Barricade.tscn" type="PackedScene" id=7]
+
+[sub_resource type="CircleShape2D" id=1]
+resource_local_to_scene = true
+radius = 12.0
 
 [node name="TEST_EnemyWander" type="Node2D"]
-position = Vector2( -718.729, 68.4277 )
+position = Vector2( -717.785, 75.0348 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -23,8 +28,18 @@ floor_length = 40
 
 [node name="Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 1177.75, 383.384 )
+collision_mask = 200
 run_speed = 80.0
+
+[node name="CollisionShape2D" parent="Enemy" index="2"]
+shape = SubResource( 1 )
 
 [node name="ItemCreator" parent="." instance=ExtResource( 3 )]
 
 [node name="CanvasLayer" parent="." instance=ExtResource( 6 )]
+
+[node name="Barricade" parent="." instance=ExtResource( 7 )]
+position = Vector2( 1469.75, 401.003 )
+BUILDING_TIME = 0
+
+[editable path="Enemy"]

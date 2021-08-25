@@ -1,37 +1,30 @@
 extends KinematicBody2D
 class_name Enemy
 
-# custom signals
-
-# enums - constant
 enum EnemyState {
 	FOLLOW_PLAYER,
 	SEARCH_GOLD,
 	WANDER,
 	COOLDOW_ATTACK
 }
-# exports variables
+
 export(float, 0, 200) var run_speed :float = 450
 export(float, 0, 100) var wander_speed := 40
 export(float, 1, 4) var wander_time := 2
 export(float, 150, 450) var gravity := 300
-export(float, 1, 2) var recoy_in_x : float = 1.5
-export(float, 0, 120) var recoy_in_y : float  = 60
 export(float, 0, 200) var rage_distance : float = 150
 export(float) var time_between_attacks : int = 1.5
 export(EnemyState) var _current_state = EnemyState.WANDER
+export(int) var life := 10
 
-# public - private variables
 var velocity := Vector2.ZERO
 var target : PhysicsBody2D
 var _is_player_in_range := false
 var _direction_options := [Vector2.RIGHT, Vector2.LEFT]
 
-# on ready variables
 export(NodePath) onready var wander_timer = get_node(wander_timer) as Timer
 export(NodePath) onready var attack_cooldown_timer = get_node(attack_cooldown_timer) as Timer
 
-# built-in functions
 
 func _ready() -> void:
 	# Ininitialize statemachine
@@ -47,7 +40,6 @@ func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
 	_move()
 
-# public - private functions
 
 func _add_gravity(delta : float) -> void:
 	if !is_on_floor():
@@ -170,10 +162,15 @@ func _on_AttackRange_body_entered(body: Node) -> void:
 	if body is Player:
 		target = body
 		_is_player_in_range = true
+		return
 		
 	if body is Nugget:
 		target = null
 		body.queue_free()
+		return
+
+	if body.is_in_group("barricade"):
+		print_debug("Hey")
 
 
 func _on_AttackRange_body_exited(body: Node) -> void:

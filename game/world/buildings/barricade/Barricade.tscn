@@ -5,13 +5,15 @@
 [ext_resource path="res://data/player_stats/Nugget.tres" type="Resource" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15, 14 )
+extents = Vector2( 11.2745, 14 )
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 19.0263
 
-[node name="Barricade" type="StaticBody2D"]
-collision_layer = 0
+[node name="Barricade" type="StaticBody2D" groups=[
+"barricade",
+]]
+collision_layer = 128
 collision_mask = 0
 script = ExtResource( 2 )
 __meta__ = {
@@ -26,6 +28,7 @@ hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
