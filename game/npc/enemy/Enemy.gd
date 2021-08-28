@@ -20,10 +20,6 @@ func _ready() -> void:
 			state["enemy"] = self
 
 
-func _process(_delta: float) -> void:
-	_get_better_speed()
-
-
 func _physics_process(delta: float) -> void:
 	_add_gravity(delta)
 	_move()
@@ -37,23 +33,24 @@ func _add_gravity(delta : float) -> void:
 func _move():
 	velocity = move_and_slide(velocity, Vector2.UP)
 
+func calculate_velocity(speed, speed_up_bonus = 1) -> void:
+	velocity.x = calculate_follow_direction(target, speed_up_bonus) * speed
 
-func _get_target_direction() -> void:
-	if not is_instance_valid(target):
-		return
-	velocity.x = 0
-	if position.direction_to(target.position).x > 0:
-		velocity.x = 1
-	elif position.direction_to(target.position).x < 0:
-		velocity.x = -1
+func calculate_follow_direction(to: Node2D, speed_up_bonus: float) -> float:
+	if is_instance_valid(to):
+		var direction := to.global_position.x - global_position.x 
+		# Don't follow if the distance is to little
+		if abs(direction) < 10:
+			return 0.0
+		# Bost of speed if is necessary
+		if abs(direction) < 150:
+			return sign(direction) * speed_up_bonus
+		return sign(direction)
+	return 0.0
 
-
-func _get_better_speed() -> void:
-	if target == null:
-		return
-	# This formula is better A^2 = B^2 + C^2 that A = (B^2 + C^2)^1/2
-	var distance_to_player = position.distance_squared_to(target.position)
-	var distance_to_accelerate = pow(range_distance, 2)
-	if(distance_to_accelerate > distance_to_player):
-		velocity.x *= 1.5
-		return
+func _on_AttackRange_body_entered(body: Node) -> void:
+	if body is Nugget:
+		body.queue_free()
+	
+	if body is Player:
+		body.receive_damage(1)
