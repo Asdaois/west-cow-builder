@@ -32,6 +32,12 @@ position = Vector2( 755, 81 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 217, 6 )
 
+[node name="CollisionShape2D" parent="Player" index="1"]
+visible = true
+
+[node name="PlayerArea" parent="Player" index="3"]
+visible = true
+
 [node name="Camera" type="Camera2D" parent="Player"]
 position = Vector2( -1, -7 )
 current = true
