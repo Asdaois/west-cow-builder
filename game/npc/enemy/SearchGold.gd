@@ -14,7 +14,7 @@ func exit(next_state) -> void:
 	state_machine.change_to(next_state)
 
 
-func process(delta: float) -> void:
+func process(_delta: float) -> void:
 	if not is_instance_valid(enemy.target):
 		exit("ChooseNextAction")
 	

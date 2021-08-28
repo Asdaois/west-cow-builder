@@ -32,3 +32,4 @@ floor_length = 40
 [node name="Barricade" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1469.75, 401.003 )
 BUILDING_TIME = 0
+_hit_points = 3

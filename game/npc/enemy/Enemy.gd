@@ -52,5 +52,13 @@ func _on_AttackRange_body_entered(body: Node) -> void:
 	if body is Nugget:
 		body.queue_free()
 	
-	if body is Player:
-		body.receive_damage(1)
+	if body.has_method("receive_damage"):
+		do_attack(body)
+
+
+func do_attack(objective) -> void:
+	if not is_instance_valid(objective):
+		return
+	if objective.has_method("receive_damage"):
+		objective.receive_damage(1)
+	attack_cooldown_timer.start()

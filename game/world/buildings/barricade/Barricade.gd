@@ -8,11 +8,16 @@ export var BUILDING_TIME = 10
 export var BUILDING_COST = 1
 export(Resource) var nuggets = nuggets as ItemResource
 
-# public - private variables
+# public - private variablees
+export(int, 3, 20) var _hit_points = 10 setget _set_hit_points
+func _set_hit_points(new_value: int) ->void:
+	_hit_points = new_value
+	if _hit_points <= 0:
+		queue_free()
+
 var _buildable = false
 var _building = false
 var _built = false
-
 # on ready variables
 onready var label = $Label
 onready var start_building = $StartBulding
@@ -35,8 +40,13 @@ func _input(event):
 			_stop_input_timer()
 
 # public - private functions
+func receive_damage(damage: int) -> void:
+	self._hit_points -= damage
+
+
 func _start_input_timer(duration):
 	start_building.start(duration)
+
 
 func _stop_input_timer():
 	start_building.stop()
@@ -52,16 +62,19 @@ func _on_Area2D_body_entered(body):
 			label.text = "No tienes oro \nsuficiente"
 			_buildable = false
 
+
 func _on_Area2D_body_exited(body: Node):
 	if body.is_in_group("player") and _built == false:
 		label.text = ""
 		_buildable = false
+
 
 func _on_StartBulding_timeout():
 	label.text = ""
 	_building = true
 	nuggets.quantity -= BUILDING_COST
 	building_time.start(BUILDING_TIME)
+
 
 func _on_BuildingTime_timeout():
 	_built = true

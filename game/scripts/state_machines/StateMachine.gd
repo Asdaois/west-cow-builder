@@ -1,19 +1,19 @@
 extends Node
-
 class_name StateMachine
-export(bool) var auto_start = true
+
+export(bool) var autostart = true
 var state: Object
 
 var history = []
 
 func _ready() -> void:
-	if auto_start:
+	state = get_child(0)
+	if autostart:
 		start_machine()
 	else:
 		_disabled_node()
 
 func start_machine():
-	state = get_child(0)
 	# Set the initial state to the first child node
 	_enabled_node()
 	call_deferred("_enter_state")
@@ -64,11 +64,10 @@ func _unhandled_key_input(event):
 	if state.has_method("unhandled_key_input"):
 		state.unhandled_key_input(event)
 
-
 func _disabled_node():
 	set_process(false)
 	set_physics_process(false)
-	set_process_input(false) 
+	set_process_input(false)
 	set_process_unhandled_key_input(false)
 	set_process_unhandled_input(false)
 	set_block_signals(true)
@@ -77,16 +76,14 @@ func _disabled_node():
 func _enabled_node():
 	set_process(true)
 	set_physics_process(true)
-	set_process_input(true) 
+	set_process_input(true)
 	set_process_unhandled_key_input(true)
 	set_process_unhandled_input(true)
 	set_block_signals(false)
 
-# Virtual functions
-
+# virtual functions
 func enter():
 	pass
 
-# warning-ignore:unused_argument
-func exit(next_state):
+func exit(_next_state):
 	pass
