@@ -53,6 +53,11 @@ _global_script_classes=[ {
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://scripts/state_machines/StateMachine.gd"
+}, {
+"base": "Resource",
+"class": "VelocityResource",
+"language": "GDScript",
+"path": "res://scripts/custom_resources/Velocity.gd"
 } ]
 _global_script_class_icons={
 "Citizen": "",
@@ -63,7 +68,8 @@ _global_script_class_icons={
 "NpcWeapons": "",
 "Nugget": "",
 "Player": "",
-"StateMachine": ""
+"StateMachine": "",
+"VelocityResource": ""
 }
 
 [application]
