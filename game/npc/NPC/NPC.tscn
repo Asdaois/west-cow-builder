@@ -125,6 +125,7 @@ collision_mask = 34
 shape = SubResource( 3 )
 
 [node name="NuggetDetector" type="Area2D" parent="Areas"]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
