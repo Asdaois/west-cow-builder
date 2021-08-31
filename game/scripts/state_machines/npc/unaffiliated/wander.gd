@@ -4,7 +4,7 @@ var state_machine: StateMachine
 var npc: NPC
 
 func enter():
-	assert(npc.wander_timer.connect("timeout", self, "_on_WanderTimer_timeout") == 0)
+	npc.wander_timer.connect("timeout", self, "_on_WanderTimer_timeout")
 	npc.wander_timer.start()
 	wander()
 	pass

@@ -1,11 +1,15 @@
 extends Node2D
 
 func _ready() -> void:
-	# $Player.connect("drop_nugget", self, "_on_Player_drop_nugget")
+	GameSignals.connect("change_ower", self, "add_scene_to_world")
 	pass
 
-func _on_Player_drop_nugget(nugget, direction, location):
-	var n = nugget.instance()
+func _on_Player_drop_nugget(nugget: PackedScene, direction: float , new_position: Vector2):
+	var n: Node2D = nugget.instance()
 	add_child(n)
 	n.rotation = direction
-	n.position = location
+	n.global_position = new_position
+
+
+func add_scene_to_world(scene: Node) -> void:
+	add_child(scene)
