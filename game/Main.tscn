@@ -50,21 +50,6 @@ zoom = Vector2( 0.3, 0.3 )
 [node name="Cow" parent="." instance=ExtResource( 3 )]
 position = Vector2( 180.79, -84.3812 )
 
-[node name="Cow5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 339.54, -56.6629 )
-
-[node name="Cow6" parent="." instance=ExtResource( 3 )]
-position = Vector2( 218.587, -102.02 )
-
-[node name="Cow2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 64.8874, 71.802 )
-
-[node name="Cow3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 518.258, 27.8014 )
-
-[node name="Cow4" parent="." instance=ExtResource( 3 )]
-position = Vector2( 282.795, -29.2806 )
-
 [node name="BrokenCart" parent="." instance=ExtResource( 10 )]
 position = Vector2( 1745.75, 70.0493 )
 

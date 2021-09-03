@@ -1,10 +1,9 @@
 extends KinematicBody2D
 class_name Cow
 
-
 enum {
-	IDLE,
-	WANDER
+	WANDER,
+	IDLE
 }
 
 export var GRAVITY = 400
@@ -22,15 +21,17 @@ var velocity := Vector2.ZERO
 
 # on ready variables
 onready var label := $Label
-onready var pickup_timer := $PickupTimer
+onready var pickup_timer := $Timers/WanderTimer
 onready var wander_controller := $WanderController
 onready var sprite := $Sprite
 
 # built-in functions
 
 func _ready():
-	randomize()
-	_state = _pick_random_state([IDLE, WANDER])
+	for state in $StateMachine.get_children():
+		state.cow = self
+#	randomize()
+#	_state = _pick_random_state([IDLE, WANDER])
 	assert(GameSignals.connect("cow_is_picked",self, "_check_is_picked") == 0)
 
 
@@ -42,7 +43,6 @@ func _process(_delta):
 func _input(event) -> void:
 	if(_pickable):
 		if event.is_action_pressed("ui_down"):
-			_state = IDLE
 			_timer_start()
 		if event.is_action_released("ui_down"):
 			_timer_stop()
@@ -51,20 +51,8 @@ func _input(event) -> void:
 
 
 func _physics_process(delta):
-	match _state:
-		IDLE:
-			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-			if wander_controller.get_time_left() == 0:
-				_update_wander()
-		WANDER:
-			_accelerate_towards_point(wander_controller.target_position, delta)
-			if global_position.distance_to(wander_controller.target_position) <= 4:
-				_update_wander()
-			if wander_controller.get_time_left() == 0:
-				_update_wander()
 	_add_gravity(delta)
 	velocity = move_and_slide(velocity)
-
 
 # public - private functions
 func _check_is_picked(body):
@@ -81,7 +69,6 @@ func _add_gravity(delta) -> void:
 func _timer_start():
 	pickup_timer.start(PICKUP_TIME)
 	_update_timer = true
-
 
 func _timer_stop():
 	pickup_timer.stop()
