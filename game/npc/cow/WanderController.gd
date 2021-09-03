@@ -17,19 +17,19 @@ onready var timer: Timer = $Timer
 
 # built-in functions
 func _ready():
-	_update_target_position()
+  _update_target_position()
 
 # public - private functions
 func _update_target_position():
-	var target_vector = Vector2(rand_range(-wander_range, wander_range), 0)
-	target_position = start_position + target_vector
+  var target_vector = Vector2(rand_range(-wander_range, wander_range), 0)
+  target_position = start_position + target_vector
 
 func get_time_left():
-	return timer.time_left
-	
+  return timer.time_left
+
 func start_wander_timer(duration):
-	timer.start(duration)
+  timer.start(duration)
 
 # signals handlers
 func _on_Timer_timeout():
-	_update_target_position()
+  _update_target_position()

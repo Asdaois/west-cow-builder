@@ -5,9 +5,9 @@ extends KinematicBody2D
 
 # enums - constant
 enum {
-	WALK,
-	RUN,
-	TIRED
+  WALK,
+  RUN,
+  TIRED
 }
 
 # exports variables
@@ -35,21 +35,21 @@ var state
 var current_target : Node setget _set_current_target
 
 func _set_current_target(new_value : Node):
-	if new_value == null:
-		current_target = null
-		return
-		
-	if current_target == null:
-		current_target = new_value
-		
-	if is_instance_valid(current_target):
-		if current_target.is_in_group("broken_cart"):
-			return
-	
-	if new_value.is_in_group("broken_cart"):
-		current_target = new_value
-	current_target = new_value
-	GameSignals.emit_signal("cow_is_picked", new_value)
+  if new_value == null:
+    current_target = null
+    return
+
+  if current_target == null:
+    current_target = new_value
+
+  if is_instance_valid(current_target):
+    if current_target.is_in_group("broken_cart"):
+      return
+
+  if new_value.is_in_group("broken_cart"):
+    current_target = new_value
+  current_target = new_value
+  GameSignals.emit_signal("cow_is_picked", new_value)
 
 # on ready variables
 onready var animationPlayer := $AnimationPlayer
@@ -61,114 +61,115 @@ onready var running_timer_right := $RunningTimerRight
 
 # built-in functions
 func _ready() -> void:
-	assert(nuggets.connect("quantity_changed", self, "_get_nugget") == 0)
-	assert(nuggets.connect('quantity_emptied', self, "_game_over") == 0)
-	assert(cows.connect("quantity_changed", self, "_get_cow") == 0)
-	assert(water.connect("quantity_changed", self, "_get_water") == 0)
-	assert(GameSignals.connect("cow_exited_player_range", self, "_search_new_cow") == 0)
+  assert(nuggets.connect("quantity_changed", self, "_get_nugget") == 0)
+  assert(nuggets.connect('quantity_emptied', self, "_game_over") == 0)
+  assert(cows.connect("quantity_changed", self, "_get_cow") == 0)
+  assert(water.connect("quantity_changed", self, "_get_water") == 0)
+  assert(GameSignals.connect("cow_exited_player_range", self, "_search_new_cow") == 0)
 
 func _physics_process(delta) -> void:
-	_move_state(delta)
-	if(velocity.x != 0):
-		match state:
-			WALK:
-				water.quantity -= stepify(WATER_NORMAL * delta, 0.01)
-			RUN:
-				water.quantity -= stepify(WATER_RUNNING * delta, 0.01)
+  _move_state(delta)
+  if(velocity.x != 0):
+    match state:
+      WALK:
+        water.quantity -= stepify(WATER_NORMAL * delta, 0.01)
+      RUN:
+        water.quantity -= stepify(WATER_RUNNING * delta, 0.01)
 
 func _input(event):
-	if event.is_action_pressed("drop_nugget"):
-		if nuggets.quantity == 1:
-			if Globals.DEBUG:
-				print_debug("One GOLD to the poor")
-		elif nuggets.quantity > 0:
-			nuggets.quantity -= 1
-			_instantiate_nugget()
-	
-	if event.is_action_pressed("ui_left"):
-		if state != TIRED:
-			state = WALK
-			if(event.is_echo() != true and running_timer_left.time_left > 0):
-				state = RUN
-			running_timer_right.stop()
-			running_timer_left.start(0.5)
-	
-	if  event.is_action_pressed("ui_right"):
-		if state != TIRED:
-			state = WALK
-			if(event.is_echo() != true and running_timer_right.time_left > 0):
-				state = RUN
-			running_timer_left.stop()
-			running_timer_right.start(0.5)
+  if event.is_action_pressed("drop_nugget"):
+    if nuggets.quantity == 1:
+      if Globals.DEBUG:
+        print_debug("One GOLD to the poor")
+    elif nuggets.quantity > 0:
+      nuggets.quantity -= 1
+      _instantiate_nugget()
+
+  if event.is_action_pressed("ui_left"):
+    if state != TIRED:
+      state = WALK
+      if(event.is_echo() != true and running_timer_left.time_left > 0):
+        state = RUN
+      running_timer_right.stop()
+      running_timer_left.start(0.5)
+
+  if  event.is_action_pressed("ui_right"):
+    if state != TIRED:
+      state = WALK
+      if(event.is_echo() != true and running_timer_right.time_left > 0):
+        state = RUN
+      running_timer_left.stop()
+      running_timer_right.start(0.5)
 
 func _process(_delta):
-	if(water.quantity == 0):
-		state = TIRED
+  if(water.quantity == 0):
+    state = TIRED
 
 # public - private functions
 func receive_damage(damage: int) -> void:
-	nuggets.quantity -= damage
-	_instantiate_nugget()
+  nuggets.quantity -= damage
+  _instantiate_nugget()
 
 func _instantiate_nugget():
-	GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
-	
+  GameSignals.emit_signal("instanciate_item_in_world", nugget_scene, global_position)
+
 func _move_state(delta) -> void:
-	var input_vector := Vector2.ZERO
-	input_vector.x = (
-		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	)
-	
-	if input_vector != Vector2.ZERO:
-		if input_vector.x < 0:
-			animationPlayer.play("WalkLeft")
-		else:
-			animationPlayer.play("WalkRight")
-		match state:
-			WALK:
-				velocity = input_vector * NORMAL_SPEED
-			RUN:
-				velocity = input_vector * RUNNING_SPEED
-			TIRED:
-				velocity = input_vector * TIRED_SPEED
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
-	_add_gravity(delta)
-	_move()
+  var input_vector := Vector2.ZERO
+  input_vector.x = (
+    Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+  )
+
+  if input_vector != Vector2.ZERO:
+    if input_vector.x < 0:
+      animationPlayer.play("WalkLeft")
+    else:
+      animationPlayer.play("WalkRight")
+    match state:
+      WALK:
+        velocity = input_vector * NORMAL_SPEED
+      RUN:
+        velocity = input_vector * RUNNING_SPEED
+      TIRED:
+        velocity = input_vector * TIRED_SPEED
+  else:
+    velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
+  _add_gravity(delta)
+  _move()
 
 func _add_gravity(delta) -> void:
-	if !is_on_floor():
-		velocity.y += delta * GRAVITY
+  if !is_on_floor():
+    velocity.y += delta * GRAVITY
 
 func _move() -> void:
-	velocity = move_and_slide(velocity)
+  velocity = move_and_slide(velocity)
 
 func _get_nugget(value):
-	label.text = "Nuggets: " + String(value)
+  label.text = "Nuggets: " + String(value)
 
 func _get_cow(value):
-	label2.text = "Cows: " + String(value)
+  label2.text = "Cows: " + String(value)
 
 func _get_water(value):
-	label3.text = "Water: " + String(value)
+  label3.text = "Water: " + String(value)
 
 func _game_over():
-	GameStateManager.game_over()
-	queue_free()
+  GameStateManager.game_over()
+  queue_free()
 
 func _search_new_cow():
-	var bodies = player_area.get_overlapping_bodies()
-	var closer_cows := []
-	var distance_to_cows := []
-	
-	for body in bodies:
-		if body.is_in_group("cow"):
-			closer_cows.append(body)
-			distance_to_cows.append(global_position.distance_squared_to(body.global_position))
-	var closer_cow_distance = distance_to_cows.min()
-	for cow in closer_cows:
-		if global_position.distance_squared_to(cow.global_position) == closer_cow_distance:
-			self.current_target = cow
-			
-	pass
+  var bodies = player_area.get_overlapping_bodies()
+  var closer_cows := []
+  var distance_to_cows := []
+
+  for body in bodies:
+    if body.is_in_group("cow"):
+      closer_cows.append(body)
+      distance_to_cows.append(
+        global_position.distance_squared_to(body.global_position)
+      )
+  var closer_cow_distance = distance_to_cows.min()
+  for cow in closer_cows:
+    if (global_position.distance_squared_to(cow.global_position)
+    == closer_cow_distance):
+      self.current_target = cow
 

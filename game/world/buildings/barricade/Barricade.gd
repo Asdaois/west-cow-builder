@@ -11,9 +11,9 @@ export(Resource) var nuggets = nuggets as ItemResource
 # public - private variablees
 export(int, 3, 20) var _hit_points = 10 setget _set_hit_points
 func _set_hit_points(new_value: int) ->void:
-	_hit_points = new_value
-	if _hit_points <= 0:
-		queue_free()
+  _hit_points = new_value
+  if _hit_points <= 0:
+    queue_free()
 
 var _buildable = false
 var _building = false
@@ -27,59 +27,59 @@ onready var sprite = $Sprite
 # built-in functions
 
 func _process(_delta):
-	if start_building.time_left > 0:
-		label.text = "Start building in: " + str(int(start_building.time_left)) + "s"
-	if building_time.time_left > 0:
-		label.text = "Building... " + str(int(building_time.time_left)) + "s left"
+  if start_building.time_left > 0:
+    label.text = "Start building in: " + str(int(start_building.time_left)) + "s"
+  if building_time.time_left > 0:
+    label.text = "Building... " + str(int(building_time.time_left)) + "s left"
 
 func _input(event):
-	if(_buildable):
-		if event.is_action_pressed("ui_down"):
-			_start_input_timer(3)
-		if event.is_action_released("ui_down"):
-			_stop_input_timer()
+  if(_buildable):
+    if event.is_action_pressed("ui_down"):
+      _start_input_timer(3)
+    if event.is_action_released("ui_down"):
+      _stop_input_timer()
 
 # public - private functions
 func receive_damage(damage: int) -> void:
-	self._hit_points -= damage
+  self._hit_points -= damage
 
 
 func _start_input_timer(duration):
-	start_building.start(duration)
+  start_building.start(duration)
 
 
 func _stop_input_timer():
-	start_building.stop()
-	label.text = "Presiona v para\nconstruir una\nbarricada"
+  start_building.stop()
+  label.text = "Presiona v para\nconstruir una\nbarricada"
 
 # signals handlers
 func _on_Area2D_body_entered(body):
-	if body.is_in_group("player") and _built == false:
-		if nuggets.quantity > 1:
-			label.text = "Presiona v para\nconstruir una\nbarricada"
-			_buildable = true
-		else:
-			label.text = "No tienes oro \nsuficiente"
-			_buildable = false
+  if body.is_in_group("player") and _built == false:
+    if nuggets.quantity > 1:
+      label.text = "Presiona v para\nconstruir una\nbarricada"
+      _buildable = true
+    else:
+      label.text = "No tienes oro \nsuficiente"
+      _buildable = false
 
 
 func _on_Area2D_body_exited(body: Node):
-	if body.is_in_group("player") and _built == false:
-		label.text = ""
-		_buildable = false
+  if body.is_in_group("player") and _built == false:
+    label.text = ""
+    _buildable = false
 
 
 func _on_StartBulding_timeout():
-	label.text = ""
-	_building = true
-	nuggets.quantity -= BUILDING_COST
-	building_time.start(BUILDING_TIME)
+  label.text = ""
+  _building = true
+  nuggets.quantity -= BUILDING_COST
+  building_time.start(BUILDING_TIME)
 
 
 func _on_BuildingTime_timeout():
-	_built = true
-	_building = false
-	_buildable = false
-	sprite.frame = 1
-	$CollisionShape2D.set_deferred("disabled", false)
-	label.text = ""
+  _built = true
+  _building = false
+  _buildable = false
+  sprite.frame = 1
+  $CollisionShape2D.set_deferred("disabled", false)
+  label.text = ""

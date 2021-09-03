@@ -1,21 +1,13 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://npc/enemy/sprites/Indian.png" type="Texture" id=1]
 [ext_resource path="res://npc/enemy/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://scripts/state_machines/enemy/EnemyStateMachine.gd" type="Script" id=3]
 [ext_resource path="res://scripts/state_machines/enemy/Wander.gd" type="Script" id=4]
-[ext_resource path="res://npc/enemy/SearchGold.gd" type="Script" id=5]
-[ext_resource path="res://npc/enemy/ChooseNextAction.gd" type="Script" id=6]
-[ext_resource path="res://npc/enemy/ChasePlayer.gd" type="Script" id=7]
-[ext_resource path="res://npc/enemy/AttackPlayerDefenses.gd" type="Script" id=8]
-
-[sub_resource type="Shader" id=4]
-code = "shader_type canvas_item;
-
-"
-
-[sub_resource type="ShaderMaterial" id=5]
-shader = SubResource( 4 )
+[ext_resource path="res://scripts/state_machines/enemy/SearchGold.gd" type="Script" id=5]
+[ext_resource path="res://scripts/state_machines/enemy/ChooseNextAction.gd" type="Script" id=6]
+[ext_resource path="res://scripts/state_machines/enemy/ChasePlayer.gd" type="Script" id=7]
+[ext_resource path="res://scripts/state_machines/enemy/AttackPlayerDefenses.gd" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 resource_local_to_scene = true
@@ -27,8 +19,10 @@ radius = 200.0
 [sub_resource type="CircleShape2D" id=3]
 radius = 14.0
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 12.1832, 21.8995 )
+
 [node name="Enemy" type="KinematicBody2D"]
-material = SubResource( 5 )
 collision_layer = 4
 collision_mask = 200
 script = ExtResource( 2 )
@@ -46,25 +40,25 @@ script = ExtResource( 3 )
 script = ExtResource( 4 )
 wander_timer = NodePath("../../Timers/WanderTimer")
 stop_timer = NodePath("../../Timers/StopTimer")
-detection_range_area = NodePath("../../DetectionRange")
+detection_range_area = NodePath("../../Areas/DetectionRange")
 
 [node name="SearchGold" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )
 
 [node name="ChooseNextAction" type="Node" parent="StateMachine"]
 script = ExtResource( 6 )
-detection_range_area = NodePath("../../DetectionRange")
+detection_range_area = NodePath("../../Areas/DetectionRange")
 
 [node name="ChasePlayer" type="Node" parent="StateMachine"]
 script = ExtResource( 7 )
-detection_range_area = NodePath("../../DetectionRange")
-attack_range = NodePath("../../AttackRange")
+detection_range_area = NodePath("../../Areas/DetectionRange")
+attack_range = NodePath("../../Areas/AttackRange")
 attack_CD_timer = NodePath("../../Timers/AtackCooldownTimer")
 
 [node name="AttackPlayerDefenses" type="Node" parent="StateMachine"]
 script = ExtResource( 8 )
 attack_CD_timer = NodePath("../../Timers/AtackCooldownTimer")
-attack_range = NodePath("../../AttackRange")
+attack_range = NodePath("../../Areas/AttackRange")
 
 [node name="Timers" type="Node" parent="."]
 
@@ -86,22 +80,32 @@ visible = false
 position = Vector2( 0, 12 )
 shape = SubResource( 1 )
 
-[node name="DetectionRange" type="Area2D" parent="."]
+[node name="Areas" type="Node2D" parent="."]
+
+[node name="DetectionRange" type="Area2D" parent="Areas"]
 visible = false
 collision_layer = 0
 collision_mask = 131
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/DetectionRange"]
 shape = SubResource( 2 )
 
-[node name="AttackRange" type="Area2D" parent="."]
+[node name="AttackRange" type="Area2D" parent="Areas"]
 visible = false
 collision_layer = 0
 collision_mask = 131
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/AttackRange"]
 position = Vector2( 0, 11.9055 )
 shape = SubResource( 3 )
 
-[connection signal="body_entered" from="AttackRange" to="StateMachine" method="_on_AttackRange_body_entered"]
-[connection signal="body_entered" from="AttackRange" to="." method="_on_AttackRange_body_entered"]
+[node name="HitBox" type="Area2D" parent="Areas"]
+collision_layer = 4
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/HitBox"]
+shape = SubResource( 4 )
+
+[connection signal="body_entered" from="Areas/AttackRange" to="StateMachine" method="_on_AttackRange_body_entered"]
+[connection signal="body_entered" from="Areas/AttackRange" to="." method="_on_AttackRange_body_entered"]
+[connection signal="area_entered" from="Areas/HitBox" to="." method="_on_HitBox_area_entered"]

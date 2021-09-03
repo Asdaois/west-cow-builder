@@ -14,12 +14,12 @@ onready var player := $Player
 # built-in functions
 
 func _init() -> void:
-	pass
+  pass
 
 
 func _ready() -> void:
-	nuggets.quantity += 1
-	pass
+  nuggets.quantity += 1
+  pass
 
 # public - private functions
 
