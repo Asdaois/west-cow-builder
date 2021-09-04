@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://npc/cow/sprites/vaca.png" type="Texture" id=1]
 [ext_resource path="res://npc/cow/Cow.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://npc/cow/StateMachine.gd" type="Script" id=5]
 [ext_resource path="res://npc/cow/Wander.gd" type="Script" id=6]
 [ext_resource path="res://npc/cow/Idle.gd" type="Script" id=7]
+[ext_resource path="res://npc/cow/Picking.gd" type="Script" id=8]
 
 [sub_resource type="CapsuleShape2D" id=1]
 height = 10.0
@@ -37,13 +38,19 @@ wander_controller = NodePath("../../WanderController")
 script = ExtResource( 7 )
 idle_timer = NodePath("../../Timers/IdleTimer")
 
+[node name="Picking" type="Node" parent="StateMachine"]
+script = ExtResource( 8 )
+
 [node name="Timers" type="Node" parent="."]
 
 [node name="PickupTimer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="WanderTimer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="IdleTimer" type="Timer" parent="Timers"]
+one_shot = true
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

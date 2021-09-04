@@ -7,24 +7,26 @@ var state_machine: StateMachine
 var cow: Cow
 
 func enter():
-	print("im enteing enter")
 	subscribe()
-	do_idle()
 
 func exit(next_state):
-	print("im exiting idleing")
 	unsubscribe()
 	state_machine.change_to(next_state)
 
 func subscribe():
 	idle_timer.connect("timeout", self, "exit_wander")
+	idle_timer.start(rand_range(2, 4))
 
 func unsubscribe():
 	idle_timer.disconnect("timeout", self, "exit_wander")
 
-func do_idle():
-	idle_timer.start(3)
-	cow.velocity = cow.velocity.move_toward(Vector2.ZERO, cow.FRICTION * 1)
+func process(delta):
+	cow.velocity = cow.velocity.move_toward(Vector2.ZERO, cow.FRICTION * delta)
+
+func input(event):
+	if cow._pickable:
+		if event.is_action_pressed("ui_down"):
+			exit("Picking")
 
 func exit_wander():
 	exit("Wander")

@@ -6,10 +6,10 @@ enum {
 	IDLE
 }
 
-export var GRAVITY = 400
+export var GRAVITY = 4000
 export var PICKUP_TIME = 3
 export var ACCELERATION = 300
-export var MAX_SPEED = 50
+export var MAX_SPEED = 400
 export var FRICTION = 200 
 export(Resource) var cow = cow as ItemResource
 
@@ -21,7 +21,7 @@ var velocity := Vector2.ZERO
 
 # on ready variables
 onready var label := $Label
-onready var pickup_timer := $Timers/WanderTimer
+onready var pickup_timer := $Timers/PickupTimer
 onready var wander_controller := $WanderController
 onready var sprite := $Sprite
 
@@ -30,8 +30,6 @@ onready var sprite := $Sprite
 func _ready():
 	for state in $StateMachine.get_children():
 		state.cow = self
-#	randomize()
-#	_state = _pick_random_state([IDLE, WANDER])
 	assert(GameSignals.connect("cow_is_picked",self, "_check_is_picked") == 0)
 
 
@@ -49,7 +47,6 @@ func _input(event) -> void:
 	else:
 		_timer_stop()
 
-
 func _physics_process(delta):
 	_add_gravity(delta)
 	velocity = move_and_slide(velocity)
@@ -65,7 +62,6 @@ func _add_gravity(delta) -> void:
 	if !is_on_floor():
 		velocity.y += delta * GRAVITY
 
-
 func _timer_start():
 	pickup_timer.start(PICKUP_TIME)
 	_update_timer = true
@@ -78,32 +74,18 @@ func _timer_stop():
 	else:
 		label.text = ""
 
-
-func _update_wander():
-	_state = _pick_random_state([IDLE, WANDER])
-	wander_controller.start_wander_timer(rand_range(2, 4))
-
-
-func _pick_random_state(state_list):
-	state_list.shuffle()
-	return state_list.pop_front()
-
-
 func _accelerate_towards_point(point, delta): 
 	var direction = global_position.direction_to(point)
 	velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
 	sprite.flip_h = velocity.x < 0
 
-
 func disable_picking():
 	label.text = ""
 	_pickable = false
 
-
 func enable_picking():
 	label.text = "presiona v para \nrecoger la vaca"
 	_pickable = true
-
 
 func _on_PickupTimer_timeout():
 	cow.quantity += 1
