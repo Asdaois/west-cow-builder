@@ -37,7 +37,6 @@ func _process(_delta):
 	if(_update_timer):
 		label.text = "Recogiendo: " + str(int(pickup_timer.time_left)) + "s"
 
-
 func _input(event) -> void:
 	if(_pickable):
 		if event.is_action_pressed("ui_down"):
