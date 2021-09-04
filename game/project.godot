@@ -99,7 +99,7 @@ window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/SingletonScriptsShortcut/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [importer_defaults]
 
